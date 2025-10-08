@@ -1,0 +1,24 @@
+server:
+  port: 3002
+  read_timeout: 30
+  write_timeout: 30
+  max_request_size: 10485760  # 10MB
+  enable_cors: true
+  trusted_proxies: []
+
+influxdb:
+  url: http://localhost:8086
+  token: your-influxdb-token
+  org: ninjait
+  bucket: metrics
+  retention_days: 90
+  batch_size: 100
+  flush_interval: 10
+
+security:
+  api_key: your-api-key-here
+  enable_tls: false
+  tls_cert: /path/to/cert.pem
+  tls_key: /path/to/key.pem
+  rate_limit: 1000  # requests per minute
+
