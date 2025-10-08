@@ -251,7 +251,7 @@ See [DEVELOPMENT.md](docs/DEVELOPMENT.md) for detailed development setup instruc
 - **[API Documentation](docs/API.md)** - RESTful API reference
 - **[Deployment Guide](docs/DEPLOYMENT.md)** - Production deployment
 - **[Security](docs/SECURITY.md)** - Security practices and compliance
-- **[Contributing](CONTRIBUTING.md)** - How to contribute
+- **[Contributing](docs/CONTRIBUTING.md)** - How to contribute
 - **[Roadmap](docs/ROADMAP.md)** - Development roadmap
 
 ---
@@ -317,7 +317,7 @@ See [ROADMAP.md](docs/ROADMAP.md) for the complete development plan.
 
 ## 🤝 Contributing
 
-We welcome contributions! Please see our [Contributing Guide](CONTRIBUTING.md) for details.
+We welcome contributions! Please see our [Contributing Guide](docs/CONTRIBUTING.md) for details.
 
 ### Development Process
 

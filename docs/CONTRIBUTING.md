@@ -31,7 +31,7 @@ We pledge to make participation in our project a harassment-free experience for 
 
 Before contributing, ensure you have:
 
-1. Read the [README.md](README.md)
+1. Read the [README.md](../README.md)
 2. Set up your [development environment](docs/DEVELOPMENT.md)
 3. Familiarized yourself with the [architecture](docs/ARCHITECTURE.md)
 4. Joined our [Discord community](https://discord.gg/ninjait)
