@@ -10,7 +10,9 @@
     "test": "vitest",
     "test:watch": "vitest --watch",
     "lint": "eslint src --ext .ts",
-    "format": "prettier --write \"src/**/*.ts\""
+    "format": "prettier --write \"src/**/*.ts\"",
+    "migrate": "node -r tsx/register src/database/migrate.ts",
+    "seed": "node -r tsx/register src/database/seed.ts"
   },
   "keywords": ["ninjait", "api-gateway", "fastify", "rmm"],
   "author": "NinjaIT Team",
@@ -25,6 +27,7 @@
     "@fastify/swagger": "^8.15.0",
     "@fastify/swagger-ui": "^4.1.0",
     "@fastify/websocket": "^10.0.1",
+    "@influxdata/influxdb-client": "^1.33.2",
     "bcrypt": "^5.1.1",
     "dotenv": "^16.4.5",
     "fastify": "^4.28.1",
