@@ -6,6 +6,7 @@ import { FastifyInstance } from 'fastify';
 import authRoutes from './auth';
 import usersRoutes from './users';
 import devicesRoutes from './devices';
+import { alertRoutes } from './alerts';
 
 export async function setupRoutes(app: FastifyInstance) {
   // API v1 routes
@@ -18,6 +19,9 @@ export async function setupRoutes(app: FastifyInstance) {
 
     // Device management routes
     apiV1.register(devicesRoutes, { prefix: '/devices' });
+
+    // Alert management routes
+    apiV1.register(alertRoutes, { prefix: '/alerts' });
   }, { prefix: '/api/v1' });
 
   // Root endpoint
