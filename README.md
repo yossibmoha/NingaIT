@@ -7,22 +7,34 @@
 **Enterprise-grade IT management platform combining RMM, PSA, and AI-powered automation**
 
 [![License](https://img.shields.io/badge/license-Proprietary-blue.svg)](LICENSE)
-[![Version](https://img.shields.io/badge/version-0.1.0--alpha-orange.svg)](https://github.com/yossibmoha/NingaIT/releases)
+[![Version](https://img.shields.io/badge/version-0.2.0--alpha-orange.svg)](https://github.com/yossibmoha/NingaIT/releases)
 [![Build Status](https://img.shields.io/badge/build-passing-brightgreen.svg)](https://github.com/yossibmoha/NingaIT/actions)
 [![Phase 1](https://img.shields.io/badge/Phase%201-Complete%20✅-success.svg)](PHASE_1_FINAL_REPORT.md)
+[![Phase 2](https://img.shields.io/badge/Phase%202-Complete%20✅-success.svg)](PHASE_2_FINAL_REPORT.md)
 [![Documentation](https://img.shields.io/badge/docs-latest-blue.svg)](docs/)
 
-[Features](#key-features) • [Architecture](#architecture) • [Getting Started](#getting-started) • [Documentation](#documentation) • [Phase 1 Report](PHASE_1_FINAL_REPORT.md)
+[Features](#key-features) • [Architecture](#architecture) • [Getting Started](#getting-started) • [Documentation](#documentation) • [Reports](PHASE_2_FINAL_REPORT.md)
 
 </div>
 
 ---
 
-## 🎉 **Phase 1 Complete!**
+## 🎉 **Phase 2 Complete! Full Foundation Ready**
 
-**Status:** ✅ All 10 tasks completed (100%)  
-**Delivered:** 8,800+ lines of production code across 90+ files  
-**See:** [Phase 1 Final Report](PHASE_1_FINAL_REPORT.md) | [Sprint 1 Summary](SPRINT_1_COMPLETE.md)
+**Phase 1:** ✅ 10/10 tasks (100%) - Infrastructure & Documentation  
+**Phase 2:** ✅ 8/8 tasks (100%) - Core Features & UI  
+**Total:** 18/18 tasks (100%) | 16,000+ lines | 37 commits  
+
+**Latest:** [Phase 2 Final Report](PHASE_2_FINAL_REPORT.md) | [Phase 1 Report](PHASE_1_FINAL_REPORT.md)
+
+**What's New in Phase 2:**
+- ✅ Complete device management (backend + frontend)
+- ✅ Real-time WebSocket communication  
+- ✅ Alert system with multi-channel notifications  
+- ✅ Script execution with queue management  
+- ✅ Enhanced dashboard with real-time charts  
+- ✅ User & role management (RBAC)  
+- ✅ Comprehensive reporting system  
 
 ---
 
