@@ -11,6 +11,7 @@ import { config } from './config';
 import { setupPlugins } from './plugins';
 import { setupRoutes } from './routes';
 import { logger } from './utils/logger';
+import { initializeDatabases, closeDatabases } from './database/connection';
 
 const app = Fastify({
   logger: logger,
@@ -26,6 +27,10 @@ const app = Fastify({
 async function start() {
   try {
     logger.info('🚀 Starting NinjaIT API Gateway...');
+
+    // Initialize database connections
+    await initializeDatabases();
+    logger.info('✅ Databases connected');
 
     // Setup plugins (CORS, JWT, rate limiting, etc.)
     await setupPlugins(app);
@@ -75,6 +80,7 @@ const signals = ['SIGINT', 'SIGTERM'];
 signals.forEach((signal) => {
   process.on(signal, async () => {
     logger.info(`${signal} received, shutting down gracefully...`);
+    await closeDatabases();
     await app.close();
     process.exit(0);
   });
