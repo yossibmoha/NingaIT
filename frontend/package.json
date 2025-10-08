@@ -1,0 +1,35 @@
+{
+  "name": "@ninjait/frontend",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "type-check": "tsc --noEmit"
+  },
+  "dependencies": {
+    "next": "^14.2.5",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "antd": "^5.19.4",
+    "@ant-design/icons": "^5.4.0",
+    "@ant-design/cssinjs": "^1.21.0",
+    "axios": "^1.7.3",
+    "zustand": "^4.5.4",
+    "react-query": "^3.39.3",
+    "dayjs": "^1.11.12",
+    "recharts": "^2.12.7"
+  },
+  "devDependencies": {
+    "@types/node": "^20.14.15",
+    "@types/react": "^18.3.3",
+    "@types/react-dom": "^18.3.0",
+    "typescript": "^5.5.4",
+    "eslint": "^8.57.0",
+    "eslint-config-next": "^14.2.5",
+    "@typescript-eslint/eslint-plugin": "^7.18.0",
+    "@typescript-eslint/parser": "^7.18.0"
+  }
+}
