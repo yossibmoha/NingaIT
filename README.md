@@ -246,13 +246,29 @@ See [DEVELOPMENT.md](docs/DEVELOPMENT.md) for detailed development setup instruc
 
 ## 📚 Documentation
 
+### Core Documentation
 - **[Development Guide](docs/DEVELOPMENT.md)** - Setup and development workflows
 - **[Architecture](docs/ARCHITECTURE.md)** - System architecture and design
-- **[API Documentation](docs/API.md)** - RESTful API reference
-- **[Deployment Guide](docs/DEPLOYMENT.md)** - Production deployment
-- **[Security](docs/SECURITY.md)** - Security practices and compliance
+- **[Project Plan](docs/PROJECT_PLAN.md)** - 36-month development roadmap
 - **[Contributing](docs/CONTRIBUTING.md)** - How to contribute
 - **[Roadmap](docs/ROADMAP.md)** - Development roadmap
+- **[Changelog](docs/CHANGELOG.md)** - Version history
+
+### Technical Documentation
+- **[Tech Stack Decision](docs/TECH_STACK_DECISION.md)** - Framework rationale and benchmarks
+- **[UI Design System](docs/UI_DESIGN_SYSTEM.md)** - Ant Design implementation guide
+- **[Database Strategy](docs/DATABASE_STRATEGY.md)** - Database architecture
+- **[Agent Platform Support](docs/AGENT_PLATFORM_SUPPORT.md)** - Cross-platform agent guide
+
+### Business & Planning
+- **[Target Audience](docs/TARGET_AUDIENCE.md)** - Market analysis (8 segments, $7.2B TAM)
+- **[AI Copilot Feature](docs/AI_COPILOT_FEATURE.md)** - AI assistant documentation
+- **[Deployment Summary](docs/DEPLOYMENT_SUMMARY.md)** - Project deployment overview
+
+### Project Management
+- **[GitHub Project Integration](docs/GITHUB_PROJECT_INTEGRATION.md)** - Task tracking with GitHub Projects
+- **[GitHub Projects Guide](docs/GITHUB_PROJECTS.md)** - Task management workflows
+- **[GitHub Project Setup](docs/GITHUB_PROJECT_SETUP.md)** - Initial setup instructions
 
 ---
 
