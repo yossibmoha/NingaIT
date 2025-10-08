@@ -1,0 +1,244 @@
+version: '3.9'
+
+services:
+  # ==========================================================================
+  # PostgreSQL - Primary Database
+  # ==========================================================================
+  postgres:
+    image: postgres:15-alpine
+    container_name: ninjait-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ninjait
+      POSTGRES_PASSWORD: changeme
+      POSTGRES_DB: ninjait_dev
+      PGDATA: /var/lib/postgresql/data/pgdata
+    ports:
+      - '5432:5432'
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U ninjait']
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - ninjait-network
+
+  # ==========================================================================
+  # Dragonfly - High-Performance Caching & Session Store (Redis-compatible)
+  # ==========================================================================
+  dragonfly:
+    image: docker.dragonflydb.io/dragonflydb/dragonfly:latest
+    container_name: ninjait-dragonfly
+    restart: unless-stopped
+    ulimits:
+      memlock: -1
+    ports:
+      - '6379:6379'
+    volumes:
+      - dragonfly_data:/data
+    command:
+      - --maxmemory=2gb
+      - --logtostderr
+    healthcheck:
+      test: ['CMD', 'redis-cli', 'ping']
+      interval: 10s
+      timeout: 3s
+      retries: 5
+    networks:
+      - ninjait-network
+
+  # ==========================================================================
+  # InfluxDB - Time-Series Database
+  # ==========================================================================
+  influxdb:
+    image: influxdb:2.7-alpine
+    container_name: ninjait-influxdb
+    restart: unless-stopped
+    environment:
+      DOCKER_INFLUXDB_INIT_MODE: setup
+      DOCKER_INFLUXDB_INIT_USERNAME: admin
+      DOCKER_INFLUXDB_INIT_PASSWORD: changeme123
+      DOCKER_INFLUXDB_INIT_ORG: ninjait
+      DOCKER_INFLUXDB_INIT_BUCKET: metrics
+      DOCKER_INFLUXDB_INIT_ADMIN_TOKEN: my-super-secret-auth-token
+    ports:
+      - '8086:8086'
+    volumes:
+      - influxdb_data:/var/lib/influxdb2
+      - influxdb_config:/etc/influxdb2
+    networks:
+      - ninjait-network
+
+  # ==========================================================================
+  # MongoDB - Document Store
+  # ==========================================================================
+  mongodb:
+    image: mongo:7
+    container_name: ninjait-mongodb
+    restart: unless-stopped
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_PASSWORD: changeme
+      MONGO_INITDB_DATABASE: ninjait
+    ports:
+      - '27017:27017'
+    volumes:
+      - mongodb_data:/data/db
+      - mongodb_config:/data/configdb
+    networks:
+      - ninjait-network
+
+  # ==========================================================================
+  # ClickHouse - Analytics & Statistics Database
+  # ==========================================================================
+  clickhouse:
+    image: clickhouse/clickhouse-server:latest
+    container_name: ninjait-clickhouse
+    restart: unless-stopped
+    environment:
+      CLICKHOUSE_DB: ninjait
+      CLICKHOUSE_USER: default
+      CLICKHOUSE_PASSWORD: changeme
+    ports:
+      - '8123:8123'  # HTTP interface
+      - '9000:9000'  # Native interface
+    volumes:
+      - clickhouse_data:/var/lib/clickhouse
+      - clickhouse_logs:/var/log/clickhouse-server
+    ulimits:
+      nofile:
+        soft: 262144
+        hard: 262144
+    networks:
+      - ninjait-network
+
+  # ==========================================================================
+  # Elasticsearch - Search & Full-Text Search
+  # ==========================================================================
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:8.11.0
+    container_name: ninjait-elasticsearch
+    restart: unless-stopped
+    environment:
+      - discovery.type=single-node
+      - xpack.security.enabled=false
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+    ports:
+      - '9200:9200'
+      - '9300:9300'
+    volumes:
+      - elasticsearch_data:/usr/share/elasticsearch/data
+    networks:
+      - ninjait-network
+
+  # ==========================================================================
+  # RabbitMQ - Message Queue
+  # ==========================================================================
+  rabbitmq:
+    image: rabbitmq:3.12-management-alpine
+    container_name: ninjait-rabbitmq
+    restart: unless-stopped
+    environment:
+      RABBITMQ_DEFAULT_USER: ninjait
+      RABBITMQ_DEFAULT_PASS: changeme
+    ports:
+      - '5672:5672'   # AMQP port
+      - '15672:15672' # Management UI
+    volumes:
+      - rabbitmq_data:/var/lib/rabbitmq
+    networks:
+      - ninjait-network
+
+  # ==========================================================================
+  # Mailhog - Email Testing (Development Only)
+  # ==========================================================================
+  mailhog:
+    image: mailhog/mailhog:latest
+    container_name: ninjait-mailhog
+    restart: unless-stopped
+    ports:
+      - '1025:1025' # SMTP
+      - '8025:8025' # Web UI
+    networks:
+      - ninjait-network
+
+  # ==========================================================================
+  # Adminer - Database Management UI
+  # ==========================================================================
+  adminer:
+    image: adminer:latest
+    container_name: ninjait-adminer
+    restart: unless-stopped
+    ports:
+      - '8080:8080'
+    environment:
+      ADMINER_DEFAULT_SERVER: postgres
+    networks:
+      - ninjait-network
+
+  # ==========================================================================
+  # Dragonfly UI - Dragonfly Management (RedisInsight compatible)
+  # ==========================================================================
+  redisinsight:
+    image: redislabs/redisinsight:latest
+    container_name: ninjait-dragonfly-ui
+    restart: unless-stopped
+    ports:
+      - '8001:8001'
+    volumes:
+      - redisinsight_data:/db
+    networks:
+      - ninjait-network
+    depends_on:
+      - dragonfly
+
+  # ==========================================================================
+  # ClickHouse UI - Tabix (ClickHouse Web UI)
+  # ==========================================================================
+  tabix:
+    image: spoonest/clickhouse-tabix-web-client:stable
+    container_name: ninjait-clickhouse-ui
+    restart: unless-stopped
+    ports:
+      - '8082:80'
+    networks:
+      - ninjait-network
+    depends_on:
+      - clickhouse
+
+# ==========================================================================
+# Volumes
+# ==========================================================================
+volumes:
+  postgres_data:
+    driver: local
+  dragonfly_data:
+    driver: local
+  influxdb_data:
+    driver: local
+  influxdb_config:
+    driver: local
+  mongodb_data:
+    driver: local
+  mongodb_config:
+    driver: local
+  clickhouse_data:
+    driver: local
+  clickhouse_logs:
+    driver: local
+  elasticsearch_data:
+    driver: local
+  rabbitmq_data:
+    driver: local
+  redisinsight_data:
+    driver: local
+
+# ==========================================================================
+# Networks
+# ==========================================================================
+networks:
+  ninjait-network:
+    driver: bridge
+

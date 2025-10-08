@@ -1,0 +1,46 @@
+# Auto-label pull requests based on file patterns
+
+# Component labels
+'component: backend':
+  - 'backend/**/*'
+  - 'backend/*'
+
+'component: frontend':
+  - 'frontend/**/*'
+  - 'frontend/*'
+
+'component: agent':
+  - 'agent/**/*'
+  - 'agent/*'
+
+'component: infrastructure':
+  - 'k8s/**/*'
+  - 'docker-compose.yml'
+  - 'Dockerfile'
+  - '.github/workflows/**/*'
+  - 'terraform/**/*'
+
+'component: database':
+  - '**/*migration*'
+  - '**/prisma/**/*'
+  - '**/schema.sql'
+
+'type: documentation':
+  - 'docs/**/*'
+  - '**/*.md'
+  - 'README*'
+
+'type: test':
+  - '**/*.test.ts'
+  - '**/*.test.tsx'
+  - '**/*.test.js'
+  - '**/*.spec.ts'
+  - '**/*.spec.js'
+  - '**/tests/**/*'
+  - '**/__tests__/**/*'
+
+'component: security':
+  - '**/security/**/*'
+  - '**/auth/**/*'
+  - '**/middleware/auth*'
+
