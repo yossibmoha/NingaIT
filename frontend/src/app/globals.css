@@ -2,6 +2,7 @@
   box-sizing: border-box;
   padding: 0;
   margin: 0;
+  transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
 }
 
 html,
@@ -11,10 +12,47 @@ body {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial,
     'Noto Sans', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol',
     'Noto Color Emoji';
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 #__next {
   min-height: 100vh;
+}
+
+/* Dark mode styles */
+html[data-theme='dark'] {
+  background-color: #141414;
+  color: rgba(255, 255, 255, 0.85);
+}
+
+html[data-theme='light'] {
+  background-color: #ffffff;
+  color: rgba(0, 0, 0, 0.88);
+}
+
+/* Scrollbar styles */
+html[data-theme='dark'] ::-webkit-scrollbar {
+  width: 12px;
+  height: 12px;
+}
+
+html[data-theme='dark'] ::-webkit-scrollbar-track {
+  background: #1f1f1f;
+}
+
+html[data-theme='dark'] ::-webkit-scrollbar-thumb {
+  background: #434343;
+  border-radius: 6px;
+}
+
+html[data-theme='dark'] ::-webkit-scrollbar-thumb:hover {
+  background: #555555;
+}
+
+/* Firefox scrollbar */
+html[data-theme='dark'] * {
+  scrollbar-width: thin;
+  scrollbar-color: #434343 #1f1f1f;
 }
 
 /* Ant Design overrides for modern look */
@@ -26,6 +64,11 @@ body {
   border-radius: 8px;
   box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.03), 0 1px 6px -1px rgba(0, 0, 0, 0.02),
     0 2px 4px 0 rgba(0, 0, 0, 0.02);
+}
+
+html[data-theme='dark'] .ant-card {
+  box-shadow: 0 1px 2px 0 rgba(255, 255, 255, 0.03), 0 1px 6px -1px rgba(255, 255, 255, 0.02),
+    0 2px 4px 0 rgba(255, 255, 255, 0.02);
 }
 
 .ant-btn {
@@ -45,6 +88,65 @@ body {
   min-height: 100vh;
 }
 
+/* React Grid Layout Styles */
+.react-grid-layout {
+  position: relative;
+  transition: height 200ms ease;
+}
+
+.react-grid-item {
+  transition: all 200ms ease;
+  transition-property: left, top, width, height;
+}
+
+.react-grid-item img {
+  pointer-events: none;
+  user-select: none;
+}
+
+.react-grid-item > .react-resizable-handle {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+}
+
+.react-grid-item > .react-resizable-handle::after {
+  content: "";
+  position: absolute;
+  right: 3px;
+  bottom: 3px;
+  width: 5px;
+  height: 5px;
+  border-right: 2px solid rgba(0, 0, 0, 0.4);
+  border-bottom: 2px solid rgba(0, 0, 0, 0.4);
+}
+
+html[data-theme='dark'] .react-grid-item > .react-resizable-handle::after {
+  border-right: 2px solid rgba(255, 255, 255, 0.4);
+  border-bottom: 2px solid rgba(255, 255, 255, 0.4);
+}
+
+.react-grid-item.react-grid-placeholder {
+  background: #1890ff;
+  opacity: 0.2;
+  transition-duration: 100ms;
+  z-index: 2;
+  border-radius: 8px;
+}
+
+.react-grid-item.resizing {
+  transition: none;
+  z-index: 100;
+}
+
+.react-grid-item.static {
+  background: #ccc;
+}
+
+.react-grid-item .drag-handle {
+  cursor: move;
+}
+
 /* Responsive utilities */
 @media (max-width: 768px) {
   .hide-mobile {
@@ -58,3 +160,60 @@ body {
   }
 }
 
+/* Fullscreen mode */
+.fullscreen-mode {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 9999;
+  overflow: auto;
+}
+
+/* Prevent transition on page load */
+.preload * {
+  transition: none !important;
+}
+
+/* Enhanced React Grid Layout Styles */
+.react-grid-item.react-draggable-dragging {
+  transition: none;
+  z-index: 100;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  transform: scale(1.02);
+}
+
+html[data-theme='dark'] .react-grid-item.react-draggable-dragging {
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+}
+
+.react-grid-item.react-resizable-resizing {
+  z-index: 100;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+html[data-theme='dark'] .react-grid-item.react-resizable-resizing {
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+}
+
+.react-grid-item > .react-resizable-handle {
+  bottom: 0;
+  right: 0;
+  cursor: se-resize;
+  z-index: 10;
+}
+
+.react-grid-item:hover > .react-resizable-handle::after {
+  border-right-color: #1890ff;
+  border-bottom-color: #1890ff;
+}
+
+/* Fullscreen dashboard background */
+html[data-theme='light'] body > div[style*="position: fixed"] {
+  background-color: #f0f2f5 !important;
+}
+
+html[data-theme='dark'] body > div[style*="position: fixed"] {
+  background-color: #141414 !important;
+}

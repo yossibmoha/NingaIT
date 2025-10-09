@@ -1,8 +1,9 @@
 import type { Metadata } from 'next'
 import { AntdRegistry } from '@ant-design/nextjs-registry'
-import { ConfigProvider, App } from 'antd'
-import { theme } from '@/lib/theme'
+import { App } from 'antd'
+import { ThemeProvider } from '@/context/ThemeContext'
 import './globals.css'
+import '../styles/recharts-theme.css'
 
 export const metadata: Metadata = {
   title: 'NinjaIT - All-in-One IT Management Platform',
@@ -19,11 +20,11 @@ export default function RootLayout({
     <html lang="en">
       <body>
         <AntdRegistry>
-          <ConfigProvider theme={theme}>
+          <ThemeProvider>
             <App>
               {children}
             </App>
-          </ConfigProvider>
+          </ThemeProvider>
         </AntdRegistry>
       </body>
     </html>

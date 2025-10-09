@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { Spin } from 'antd'
 import { useAuthStore } from '@/store/auth'
@@ -11,30 +11,39 @@ interface ProtectedRouteProps {
 
 export default function ProtectedRoute({ children }: ProtectedRouteProps) {
   const router = useRouter()
-  const { isAuthenticated, getCurrentUser } = useAuthStore()
+  const { isAuthenticated, accessToken, user } = useAuthStore()
+  const [isChecking, setIsChecking] = useState(true)
 
   useEffect(() => {
     const checkAuth = async () => {
-      const token = localStorage.getItem('access_token')
+      // Check if we have a token in store (from persistence)
+      const storeToken = accessToken
+      const localToken = localStorage.getItem('access_token')
       
-      if (!token) {
+      if (!storeToken && !localToken) {
         router.push('/login')
+        setIsChecking(false)
         return
       }
 
-      if (!isAuthenticated) {
-        try {
-          await getCurrentUser()
-        } catch (error) {
-          router.push('/login')
-        }
+      // If we have token and user data from persistence, we're good
+      if (isAuthenticated && user) {
+        setIsChecking(false)
+        return
       }
+
+      // Otherwise redirect to login
+      if (!isAuthenticated) {
+        router.push('/login')
+      }
+      
+      setIsChecking(false)
     }
 
     checkAuth()
-  }, [isAuthenticated, getCurrentUser, router])
+  }, [isAuthenticated, accessToken, user, router])
 
-  if (!isAuthenticated) {
+  if (isChecking || !isAuthenticated) {
     return (
       <div className="page-loading">
         <Spin size="large" />

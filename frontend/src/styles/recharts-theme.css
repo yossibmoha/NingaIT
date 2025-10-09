@@ -1,0 +1,62 @@
+/* Recharts theme overrides */
+
+/* Light mode (default) */
+.recharts-tooltip-wrapper {
+  z-index: 1000;
+}
+
+.recharts-default-tooltip {
+  background-color: rgba(255, 255, 255, 0.96) !important;
+  border: 1px solid #f0f0f0 !important;
+  border-radius: 6px !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15) !important;
+}
+
+.recharts-tooltip-label {
+  color: rgba(0, 0, 0, 0.85) !important;
+  font-weight: 500 !important;
+}
+
+.recharts-tooltip-item {
+  color: rgba(0, 0, 0, 0.65) !important;
+}
+
+/* Dark mode */
+html[data-theme='dark'] .recharts-default-tooltip {
+  background-color: rgba(31, 31, 31, 0.96) !important;
+  border: 1px solid #434343 !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.45) !important;
+}
+
+html[data-theme='dark'] .recharts-tooltip-label {
+  color: rgba(255, 255, 255, 0.85) !important;
+}
+
+html[data-theme='dark'] .recharts-tooltip-item {
+  color: rgba(255, 255, 255, 0.65) !important;
+}
+
+/* Legend */
+.recharts-legend-wrapper {
+  color: rgba(0, 0, 0, 0.85);
+}
+
+html[data-theme='dark'] .recharts-legend-wrapper {
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.recharts-legend-item-text {
+  color: inherit !important;
+}
+
+/* Pie chart labels */
+.recharts-pie-label-text {
+  fill: rgba(0, 0, 0, 0.85);
+  font-size: 12px;
+  font-weight: 500;
+}
+
+html[data-theme='dark'] .recharts-pie-label-text {
+  fill: rgba(255, 255, 255, 0.85);
+}
+
