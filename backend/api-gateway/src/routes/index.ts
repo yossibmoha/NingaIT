@@ -8,6 +8,7 @@ import usersRoutes from './users';
 import devicesRoutes from './devices';
 import { alertRoutes } from './alerts';
 import { scriptsRoutes } from './scripts';
+import { metricsRoutes } from './metrics';
 
 export async function setupRoutes(app: FastifyInstance) {
   // API v1 routes
@@ -20,6 +21,9 @@ export async function setupRoutes(app: FastifyInstance) {
 
     // Device management routes
     apiV1.register(devicesRoutes, { prefix: '/devices' });
+
+    // Metrics routes (InfluxDB)
+    apiV1.register(metricsRoutes, { prefix: '/metrics' });
 
     // Alert management routes - temporarily disabled due to schema issues
     // apiV1.register(alertRoutes, { prefix: '/alerts' });
