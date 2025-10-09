@@ -6,6 +6,8 @@
 import { Pool, PoolClient } from 'pg';
 import { InfluxDB, Point } from '@influxdata/influxdb-client';
 import Redis from 'ioredis';
+import { createClient, ClickHouseClient } from '@clickhouse/client';
+import amqp, { Connection, Channel } from 'amqplib';
 import { config } from '../config';
 
 // PostgreSQL connection pool
@@ -16,6 +18,13 @@ let influxClient: InfluxDB | null = null;
 
 // Dragonfly (Redis-compatible) client
 let dragonflyClient: Redis | null = null;
+
+// ClickHouse client
+let clickhouseClient: ClickHouseClient | null = null;
+
+// RabbitMQ connection and channel
+let rabbitmqConnection: Connection | null = null;
+let rabbitmqChannel: Channel | null = null;
 
 /**
  * Initialize PostgreSQL connection
@@ -285,6 +294,168 @@ export async function cacheClear(pattern: string): Promise<void> {
 }
 
 /**
+ * Initialize ClickHouse connection
+ */
+export function initializeClickHouse(): ClickHouseClient {
+  if (clickhouseClient) {
+    return clickhouseClient;
+  }
+
+  clickhouseClient = createClient({
+    url: config.database.clickhouseUrl || 'http://localhost:8123',
+    username: config.database.clickhouseUser || 'default',
+    password: config.database.clickhousePassword || '',
+    database: config.database.clickhouseDatabase || 'ninjait',
+    clickhouse_settings: {
+      async_insert: 1,
+      wait_for_async_insert: 0,
+    },
+  });
+
+  console.log('✅ ClickHouse client initialized');
+  return clickhouseClient;
+}
+
+/**
+ * Get ClickHouse client
+ */
+export function getClickHouseClient(): ClickHouseClient {
+  if (!clickhouseClient) {
+    throw new Error('ClickHouse client not initialized. Call initializeClickHouse() first.');
+  }
+  return clickhouseClient;
+}
+
+/**
+ * Execute ClickHouse query
+ */
+export async function executeClickHouseQuery<T = any>(query: string): Promise<T[]> {
+  const client = getClickHouseClient();
+  const resultSet = await client.query({ query });
+  const data = await resultSet.json();
+  return data.data as T[];
+}
+
+/**
+ * Insert data into ClickHouse
+ */
+export async function insertClickHouseData(
+  table: string,
+  data: Record<string, any>[]
+): Promise<void> {
+  const client = getClickHouseClient();
+  await client.insert({
+    table,
+    values: data,
+    format: 'JSONEachRow',
+  });
+}
+
+/**
+ * Initialize RabbitMQ connection
+ */
+export async function initializeRabbitMQ(): Promise<Channel> {
+  if (rabbitmqChannel) {
+    return rabbitmqChannel;
+  }
+
+  try {
+    // Connect to RabbitMQ
+    rabbitmqConnection = await amqp.connect(
+      config.database.rabbitmqUrl || 'amqp://localhost:5672'
+    );
+
+    console.log('✅ RabbitMQ connected successfully');
+
+    // Create channel
+    rabbitmqChannel = await rabbitmqConnection.createChannel();
+    
+    // Set prefetch to 1 for fair dispatch
+    await rabbitmqChannel.prefetch(1);
+
+    // Handle connection errors
+    rabbitmqConnection.on('error', (err) => {
+      console.error('RabbitMQ connection error:', err);
+    });
+
+    rabbitmqConnection.on('close', () => {
+      console.log('RabbitMQ connection closed');
+      rabbitmqConnection = null;
+      rabbitmqChannel = null;
+    });
+
+    return rabbitmqChannel;
+  } catch (error) {
+    console.error('❌ RabbitMQ connection failed:', error);
+    throw error;
+  }
+}
+
+/**
+ * Get RabbitMQ channel
+ */
+export function getRabbitMQChannel(): Channel {
+  if (!rabbitmqChannel) {
+    throw new Error('RabbitMQ channel not initialized. Call initializeRabbitMQ() first.');
+  }
+  return rabbitmqChannel;
+}
+
+/**
+ * Publish message to RabbitMQ queue
+ */
+export async function publishMessage(
+  queue: string,
+  message: any,
+  options?: any
+): Promise<boolean> {
+  const channel = getRabbitMQChannel();
+  
+  // Ensure queue exists
+  await channel.assertQueue(queue, { durable: true });
+  
+  // Publish message
+  return channel.sendToQueue(
+    queue,
+    Buffer.from(JSON.stringify(message)),
+    { persistent: true, ...options }
+  );
+}
+
+/**
+ * Consume messages from RabbitMQ queue
+ */
+export async function consumeMessages(
+  queue: string,
+  handler: (message: any) => Promise<void>,
+  options?: any
+): Promise<void> {
+  const channel = getRabbitMQChannel();
+  
+  // Ensure queue exists
+  await channel.assertQueue(queue, { durable: true });
+  
+  // Consume messages
+  await channel.consume(
+    queue,
+    async (msg) => {
+      if (msg) {
+        try {
+          const content = JSON.parse(msg.content.toString());
+          await handler(content);
+          channel.ack(msg);
+        } catch (error) {
+          console.error('Message handler error:', error);
+          // Reject and requeue on error
+          channel.nack(msg, false, true);
+        }
+      }
+    },
+    options
+  );
+}
+
+/**
  * Initialize all database connections
  */
 export async function initializeDatabases(): Promise<void> {
@@ -299,6 +470,20 @@ export async function initializeDatabases(): Promise<void> {
 
     // Initialize Dragonfly
     initializeDragonfly();
+
+    // Initialize ClickHouse (optional - don't fail if not available)
+    try {
+      initializeClickHouse();
+    } catch (error) {
+      console.warn('⚠️  ClickHouse initialization skipped:', error);
+    }
+
+    // Initialize RabbitMQ (optional - don't fail if not available)
+    try {
+      await initializeRabbitMQ();
+    } catch (error) {
+      console.warn('⚠️  RabbitMQ initialization skipped:', error);
+    }
 
     console.log('✅ All database connections initialized successfully');
   } catch (error) {
@@ -329,6 +514,24 @@ export async function closeDatabases(): Promise<void> {
     dragonflyClient.disconnect();
     dragonflyClient = null;
     console.log('✅ Dragonfly connection closed');
+  }
+
+  if (clickhouseClient) {
+    await clickhouseClient.close();
+    clickhouseClient = null;
+    console.log('✅ ClickHouse connection closed');
+  }
+
+  if (rabbitmqChannel) {
+    await rabbitmqChannel.close();
+    rabbitmqChannel = null;
+    console.log('✅ RabbitMQ channel closed');
+  }
+
+  if (rabbitmqConnection) {
+    await rabbitmqConnection.close();
+    rabbitmqConnection = null;
+    console.log('✅ RabbitMQ connection closed');
   }
 }
 
