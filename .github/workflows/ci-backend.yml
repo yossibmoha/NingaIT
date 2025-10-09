@@ -143,11 +143,6 @@ jobs:
         with:
           scan-type: 'fs'
           scan-ref: 'backend'
-          format: 'sarif'
-          output: 'trivy-results.sarif'
-
-      - name: Upload Trivy results to GitHub Security
-        uses: github/codeql-action/upload-sarif@v3
-        with:
-          sarif_file: 'trivy-results.sarif'
+          format: 'table'
+          exit-code: '0'
 

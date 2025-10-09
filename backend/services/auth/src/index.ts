@@ -46,6 +46,11 @@ interface User {
   passwordHash: string;
 }
 
+interface UserWithOrganization extends User {
+  organizationName: string;
+  organizationSlug: string;
+}
+
 interface Organization {
   id: string;
   name: string;
@@ -202,7 +207,7 @@ export async function login(data: z.infer<typeof LoginSchema>) {
  * Get user by ID
  */
 export async function getUserById(userId: string) {
-  const result = await pool.query<User>(
+  const result = await pool.query<UserWithOrganization>(
     `SELECT u.id, u.organization_id, u.email, u.full_name, u.role,
             o.name as organization_name, o.slug as organization_slug
      FROM users u
