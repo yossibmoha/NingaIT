@@ -20,8 +20,10 @@ import {
   PieChartOutlined,
   DownloadOutlined,
   ReloadOutlined,
+  ArrowUpOutlined,
+  ArrowDownOutlined,
 } from '@ant-design/icons';
-import { Column, Pie, DualAxes } from '@ant-design/charts';
+import { BarChart, Bar, PieChart, Pie, Cell, LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import type { ColumnsType } from 'antd/es/table';
 import dayjs from 'dayjs';
 

@@ -112,7 +112,7 @@ export default function LoginPage() {
           {/* Register Link */}
           <div style={{ textAlign: 'center' }}>
             <Text type="secondary">
-              Don't have an account?{' '}
+              Don&apos;t have an account?{' '}
               <Link href="/register" style={{ fontWeight: 500 }}>
                 Sign up now
               </Link>
