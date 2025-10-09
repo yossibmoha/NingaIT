@@ -59,7 +59,7 @@ jobs:
 
       - name: Install dependencies
         working-directory: backend/api-gateway
-        run: npm ci
+        run: npm install
 
       - name: Run linter
         working-directory: backend/api-gateway
