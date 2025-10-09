@@ -20,6 +20,7 @@ jobs:
       postgres:
         image: postgres:16-alpine
         env:
+          POSTGRES_USER: ninjait
           POSTGRES_PASSWORD: testpass
           POSTGRES_DB: ninjait_test
         options: >-
@@ -29,6 +30,18 @@ jobs:
           --health-retries 5
         ports:
           - 5432:5432
+      
+      influxdb:
+        image: influxdb:2.7-alpine
+        env:
+          DOCKER_INFLUXDB_INIT_MODE: setup
+          DOCKER_INFLUXDB_INIT_USERNAME: admin
+          DOCKER_INFLUXDB_INIT_PASSWORD: testpass123
+          DOCKER_INFLUXDB_INIT_ORG: ninjait
+          DOCKER_INFLUXDB_INIT_BUCKET: metrics
+          DOCKER_INFLUXDB_INIT_ADMIN_TOKEN: test-token-12345
+        ports:
+          - 8086:8086
       
       dragonfly:
         image: docker.dragonflydb.io/dragonflydb/dragonfly:latest
@@ -62,15 +75,15 @@ jobs:
         working-directory: backend/api-gateway
         run: npm test || echo "Tests not yet implemented"
         env:
-          POSTGRES_HOST: localhost
-          POSTGRES_PORT: 5432
-          POSTGRES_USER: postgres
-          POSTGRES_PASSWORD: testpass
-          POSTGRES_DB: ninjait_test
-          DRAGONFLY_HOST: localhost
-          DRAGONFLY_PORT: 6379
-          JWT_SECRET: test-secret
           NODE_ENV: test
+          POSTGRES_URL: postgresql://ninjait:testpass@localhost:5432/ninjait_test
+          INFLUXDB_URL: http://localhost:8086
+          INFLUXDB_TOKEN: test-token-12345
+          INFLUXDB_ORG: ninjait
+          INFLUXDB_BUCKET: metrics
+          DRAGONFLY_URL: redis://localhost:6379
+          JWT_SECRET: test-secret-min-32-characters-long
+          REFRESH_TOKEN_SECRET: refresh-test-secret-min-32-chars
 
   test-auth-service:
     name: Test Auth Service
