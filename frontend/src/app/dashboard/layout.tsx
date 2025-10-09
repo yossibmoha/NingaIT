@@ -113,7 +113,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
           <Menu
             theme="dark"
             mode="inline"
-            selectedKeys={[pathname]}
+            selectedKeys={pathname ? [pathname] : []}
             items={menuItems}
             style={{ borderRight: 0 }}
           />

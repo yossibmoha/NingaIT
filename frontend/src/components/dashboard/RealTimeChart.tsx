@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect, useRef } from 'react';
 import { Card, Select, Space, Spin } from 'antd';
-import { Line, Area, Bar } from '@ant-design/charts';
+import { LineChart, Line, AreaChart, Area, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import { useWebSocket } from '@/hooks/useWebSocket';
 
 interface RealTimeChartProps {
@@ -93,63 +93,10 @@ export default function RealTimeChart({
     });
   };
 
-  const getChartConfig = () => {
-    const baseConfig = {
-      data,
-      xField: 'timestamp',
-      yField: 'value',
-      height,
-      smooth: true,
-      animation: {
-        appear: {
-          animation: 'wave-in',
-          duration: 300,
-        },
-      },
-      xAxis: {
-        type: 'time',
-        label: {
-          formatter: (text: string) => {
-            const date = new Date(text);
-            return `${date.getHours()}:${date.getMinutes().toString().padStart(2, '0')}`;
-          },
-        },
-      },
-      yAxis: {
-        label: {
-          formatter: (text: string) => `${text}%`,
-        },
-        min: 0,
-        max: 100,
-      },
-      tooltip: {
-        formatter: (datum: any) => {
-          return {
-            name: metric.toUpperCase(),
-            value: `${datum.value.toFixed(2)}%`,
-          };
-        },
-      },
-      point: {
-        size: 2,
-        shape: 'circle',
-      },
-    };
-
-    // Add type-specific configurations
-    if (type === 'area') {
-      return {
-        ...baseConfig,
-        areaStyle: {
-          fillOpacity: 0.3,
-        },
-      };
-    }
-
-    return baseConfig;
+  const formatTimestamp = (timestamp: string) => {
+    const date = new Date(timestamp);
+    return `${date.getHours()}:${date.getMinutes().toString().padStart(2, '0')}`;
   };
-
-  const ChartComponent = type === 'area' ? Area : type === 'bar' ? Bar : Line;
 
   return (
     <Card
@@ -182,7 +129,36 @@ export default function RealTimeChart({
           <Spin />
         </div>
       ) : (
-        <ChartComponent {...getChartConfig()} />
+        <ResponsiveContainer width="100%" height={height}>
+          {type === 'area' ? (
+            <AreaChart data={data.map(d => ({ ...d, time: formatTimestamp(d.timestamp) }))}>
+              <CartesianGrid strokeDasharray="3 3" />
+              <XAxis dataKey="time" />
+              <YAxis domain={[0, 100]} />
+              <Tooltip />
+              <Legend />
+              <Area type="monotone" dataKey="value" stroke="#1890ff" fill="#1890ff" fillOpacity={0.3} name={metric.toUpperCase()} />
+            </AreaChart>
+          ) : type === 'bar' ? (
+            <BarChart data={data.map(d => ({ ...d, time: formatTimestamp(d.timestamp) }))}>
+              <CartesianGrid strokeDasharray="3 3" />
+              <XAxis dataKey="time" />
+              <YAxis domain={[0, 100]} />
+              <Tooltip />
+              <Legend />
+              <Bar dataKey="value" fill="#1890ff" name={metric.toUpperCase()} />
+            </BarChart>
+          ) : (
+            <LineChart data={data.map(d => ({ ...d, time: formatTimestamp(d.timestamp) }))}>
+              <CartesianGrid strokeDasharray="3 3" />
+              <XAxis dataKey="time" />
+              <YAxis domain={[0, 100]} />
+              <Tooltip />
+              <Legend />
+              <Line type="monotone" dataKey="value" stroke="#1890ff" name={metric.toUpperCase()} />
+            </LineChart>
+          )}
+        </ResponsiveContainer>
       )}
       {isConnected && (
         <div style={{ textAlign: 'right', fontSize: '12px', color: '#999', marginTop: '8px' }}>

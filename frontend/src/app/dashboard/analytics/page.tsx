@@ -326,12 +326,39 @@ export default function AnalyticsPage() {
                   </Select>
                 }
               >
-                <Column {...devicePerformanceConfig} height={350} />
+                <ResponsiveContainer width="100%" height={350}>
+                  <BarChart data={devicePerformanceData}>
+                    <CartesianGrid strokeDasharray="3 3" />
+                    <XAxis dataKey="device" />
+                    <YAxis />
+                    <Tooltip />
+                    <Legend />
+                    <Bar dataKey="value" fill="#1890ff" />
+                  </BarChart>
+                </ResponsiveContainer>
               </Card>
             </Col>
             <Col span={8}>
               <Card title="Device Status Distribution">
-                <Pie {...deviceStatusPieConfig} height={350} />
+                <ResponsiveContainer width="100%" height={350}>
+                  <PieChart>
+                    <Pie
+                      data={deviceStatusData}
+                      dataKey="value"
+                      nameKey="status"
+                      cx="50%"
+                      cy="50%"
+                      outerRadius={100}
+                      label
+                    >
+                      {deviceStatusData.map((entry, index) => (
+                        <Cell key={`cell-${index}`} fill={['#52c41a', '#faad14', '#f5222d'][index % 3]} />
+                      ))}
+                    </Pie>
+                    <Tooltip />
+                    <Legend />
+                  </PieChart>
+                </ResponsiveContainer>
               </Card>
             </Col>
             <Col span={24}>
@@ -349,18 +376,18 @@ export default function AnalyticsPage() {
 
         <TabPane tab="Alert Trends" key="alerts">
           <Card title="Alert Trends Over Time">
-            <Column
-              data={alertTrendData.flatMap((item) => [
-                { ...item, type: 'critical' },
-                { ...item, type: 'warning' },
-                { ...item, type: 'info' },
-              ])}
-              xField="date"
-              yField="value"
-              seriesField="type"
-              isStack
-              height={400}
-            />
+            <ResponsiveContainer width="100%" height={400}>
+              <BarChart data={alertTrendData}>
+                <CartesianGrid strokeDasharray="3 3" />
+                <XAxis dataKey="date" />
+                <YAxis />
+                <Tooltip />
+                <Legend />
+                <Bar dataKey="critical" stackId="a" fill="#f5222d" name="Critical" />
+                <Bar dataKey="warning" stackId="a" fill="#faad14" name="Warning" />
+                <Bar dataKey="info" stackId="a" fill="#1890ff" name="Info" />
+              </BarChart>
+            </ResponsiveContainer>
           </Card>
         </TabPane>
 
@@ -368,7 +395,25 @@ export default function AnalyticsPage() {
           <Row gutter={[16, 16]}>
             <Col span={12}>
               <Card title="Execution Status Distribution">
-                <Pie {...scriptExecutionPieConfig} height={400} />
+                <ResponsiveContainer width="100%" height={400}>
+                  <PieChart>
+                    <Pie
+                      data={scriptExecutionData}
+                      dataKey="value"
+                      nameKey="status"
+                      cx="50%"
+                      cy="50%"
+                      outerRadius={120}
+                      label
+                    >
+                      {scriptExecutionData.map((entry, index) => (
+                        <Cell key={`cell-${index}`} fill={['#52c41a', '#f5222d', '#faad14'][index % 3]} />
+                      ))}
+                    </Pie>
+                    <Tooltip />
+                    <Legend />
+                  </PieChart>
+                </ResponsiveContainer>
               </Card>
             </Col>
             <Col span={12}>

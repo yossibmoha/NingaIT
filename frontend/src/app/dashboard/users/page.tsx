@@ -619,7 +619,7 @@ export default function UsersPage() {
               dataSource={AVAILABLE_PERMISSIONS}
               titles={['Available', 'Selected']}
               targetKeys={selectedPermissions}
-              onChange={setSelectedPermissions}
+              onChange={(targetKeys) => setSelectedPermissions(targetKeys as string[])}
               render={(item) => item.title}
               listStyle={{ width: 300, height: 400 }}
             />
