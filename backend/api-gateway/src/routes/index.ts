@@ -10,6 +10,7 @@ import { alertRoutes } from './alerts';
 import { scriptsRoutes } from './scripts';
 import { metricsRoutes } from './metrics';
 import { cacheRoutes } from './cache';
+import { docsRoutes } from './docs';
 
 export async function setupRoutes(app: FastifyInstance) {
   // API v1 routes
@@ -36,14 +37,26 @@ export async function setupRoutes(app: FastifyInstance) {
     // apiV1.register(scriptsRoutes, { prefix: '/scripts' });
   }, { prefix: '/api/v1' });
 
+  // Documentation routes
+  app.register(docsRoutes, { prefix: '/api-docs' });
+
   // Root endpoint
   app.get('/', async () => {
     return {
       name: 'NinjaIT API Gateway',
-      version: '0.1.0',
+      version: '0.3.0',
       status: 'running',
-      docs: '/docs',
-      health: '/health',
+      documentation: {
+        swagger: '/docs',
+        redoc: '/api-docs/redoc',
+        postman: '/api-docs/postman',
+        changelog: '/api-docs/changelog',
+        openapi: '/docs/json',
+      },
+      endpoints: {
+        health: '/health',
+        api: '/api/v1',
+      },
     };
   });
 }
