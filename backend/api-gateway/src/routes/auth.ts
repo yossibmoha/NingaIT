@@ -4,6 +4,7 @@
 
 import { FastifyInstance } from 'fastify';
 import { z } from 'zod';
+import * as AuthService from '../services/auth.service';
 
 // Validation schemas
 const registerSchema = z.object({
@@ -108,20 +109,45 @@ export default async function authRoutes(app: FastifyInstance) {
       },
     },
   }, async (request, reply) => {
-    // Validate request body
-    const data = loginSchema.parse(request.body);
+    try {
+      // Validate request body
+      const data = loginSchema.parse(request.body);
 
-    // TODO: Implement login
-    // 1. Find user by email
-    // 2. Verify password
-    // 3. Generate JWT access token
-    // 4. Generate refresh token
-    // 5. Return tokens and user data
+      // Login user
+      const user = await AuthService.login(data);
 
-    reply.code(501).send({
-      error: 'Not implemented yet',
-      message: 'User login will be implemented in the auth service',
-    });
+      // Generate JWT tokens
+      const tokenPayload = {
+        sub: user.id,
+        organizationId: user.organizationId,
+        email: user.email,
+        role: user.role,
+      };
+
+      const accessToken = app.jwt.sign(tokenPayload, { expiresIn: '15m' });
+      const refreshToken = app.jwt.sign(tokenPayload, { expiresIn: '7d' });
+
+      // TODO: Store refresh token when refresh_tokens table is added
+      // await AuthService.storeRefreshToken(user.id, refreshToken, 7 * 24 * 60 * 60 * 1000);
+
+      reply.send({
+        accessToken,
+        refreshToken,
+        expiresIn: 900, // 15 minutes in seconds
+        user: {
+          id: user.id,
+          email: user.email,
+          fullName: user.fullName,
+          role: user.role,
+        },
+      });
+    } catch (error: any) {
+      app.log.error('Login error:', error);
+      reply.code(401).send({
+        error: 'Authentication failed',
+        message: error.message || 'Invalid credentials',
+      });
+    }
   });
 
   // Logout endpoint

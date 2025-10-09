@@ -10,24 +10,18 @@ import { z } from 'zod';
 
 // Database connection
 const pool = new Pool({
-  host: process.env.POSTGRES_HOST || 'localhost',
-  port: parseInt(process.env.POSTGRES_PORT || '5432'),
-  user: process.env.POSTGRES_USER || 'ninjait',
-  password: process.env.POSTGRES_PASSWORD || 'changeme',
-  database: process.env.POSTGRES_DB || 'ninjait_dev',
+  connectionString: process.env.POSTGRES_URL || 'postgresql://ninjait:changeme@localhost:5432/ninjait_dev',
 });
 
 // Redis connection for token blacklist
-const redis = new Redis({
-  host: process.env.DRAGONFLY_HOST || 'localhost',
-  port: parseInt(process.env.DRAGONFLY_PORT || '6379'),
-});
+const redis = new Redis(process.env.DRAGONFLY_URL || 'redis://localhost:6379');
 
 // Validation schemas
 const RegisterSchema = z.object({
   email: z.string().email(),
   password: z.string().min(8),
-  fullName: z.string().min(2),
+  firstName: z.string().min(2),
+  lastName: z.string().min(2),
   organizationName: z.string().min(2),
 });
 
@@ -36,25 +30,26 @@ const LoginSchema = z.object({
   password: z.string(),
 });
 
-// Types
-interface User {
+// Types matching database schema
+interface DbUser {
   id: string;
-  organizationId: string;
+  organization_id: string;
   email: string;
-  fullName: string;
-  role: string;
-  passwordHash: string;
+  password_hash: string;
+  first_name: string;
+  last_name: string;
+  is_active: boolean;
+  last_login: Date | null;
+  created_at: Date;
+  updated_at: Date;
 }
 
-interface UserWithOrganization extends User {
-  organizationName: string;
-  organizationSlug: string;
-}
-
-interface Organization {
+interface DbOrganization {
   id: string;
   name: string;
   slug: string;
+  created_at: Date;
+  updated_at: Date;
 }
 
 /**
@@ -103,10 +98,10 @@ export async function register(data: z.infer<typeof RegisterSchema>) {
     
     // Create organization
     const slug = generateSlug(data.organizationName);
-    const orgResult = await client.query<Organization>(
-      `INSERT INTO organizations (name, slug, plan, status)
-       VALUES ($1, $2, 'trial', 'active')
-       RETURNING id, name, slug`,
+    const orgResult = await client.query<DbOrganization>(
+      `INSERT INTO organizations (name, slug)
+       VALUES ($1, $2)
+       RETURNING *`,
       [data.organizationName, slug]
     );
     
@@ -115,21 +110,29 @@ export async function register(data: z.infer<typeof RegisterSchema>) {
     // Hash password
     const passwordHash = await hashPassword(data.password);
     
-    // Create user (first user is admin)
-    const userResult = await client.query<User>(
-      `INSERT INTO users (organization_id, email, password_hash, full_name, role, email_verified_at)
-       VALUES ($1, $2, $3, $4, 'admin', CURRENT_TIMESTAMP)
-       RETURNING id, organization_id, email, full_name, role`,
-      [organization.id, data.email, passwordHash, data.fullName]
+    // Create user
+    const userResult = await client.query<DbUser>(
+      `INSERT INTO users (organization_id, email, password_hash, first_name, last_name, is_active)
+       VALUES ($1, $2, $3, $4, $5, TRUE)
+       RETURNING *`,
+      [organization.id, data.email, passwordHash, data.firstName, data.lastName]
     );
     
     const user = userResult.rows[0];
     
-    // Log audit trail
+    // Create admin role for organization
+    const roleResult = await client.query(
+      `INSERT INTO roles (organization_id, name, permissions)
+       VALUES ($1, 'admin', '{"all": true}'::jsonb)
+       RETURNING id`,
+      [organization.id]
+    );
+    
+    // Assign admin role to user
     await client.query(
-      `INSERT INTO audit_logs (organization_id, user_id, action, resource_type, resource_id)
-       VALUES ($1, $2, 'user_registered', 'user', $3)`,
-      [organization.id, user.id, user.id]
+      `INSERT INTO user_roles (user_id, role_id)
+       VALUES ($1, $2)`,
+      [user.id, roleResult.rows[0].id]
     );
     
     await client.query('COMMIT');
@@ -138,8 +141,9 @@ export async function register(data: z.infer<typeof RegisterSchema>) {
       user: {
         id: user.id,
         email: user.email,
-        fullName: user.fullName,
-        role: user.role,
+        firstName: user.first_name,
+        lastName: user.last_name,
+        organizationId: user.organization_id,
       },
       organization: {
         id: organization.id,
@@ -159,10 +163,10 @@ export async function register(data: z.infer<typeof RegisterSchema>) {
  * Login user and return user data
  */
 export async function login(data: z.infer<typeof LoginSchema>) {
-  const result = await pool.query<User>(
-    `SELECT u.id, u.organization_id, u.email, u.full_name, u.role, u.password_hash
-     FROM users u
-     WHERE u.email = $1 AND u.deleted_at IS NULL AND u.status = 'active'`,
+  const result = await pool.query<DbUser>(
+    `SELECT *
+     FROM users
+     WHERE email = $1 AND is_active = TRUE`,
     [data.email]
   );
   
@@ -173,7 +177,7 @@ export async function login(data: z.infer<typeof LoginSchema>) {
   const user = result.rows[0];
   
   // Verify password
-  const isValid = await verifyPassword(data.password, user.passwordHash);
+  const isValid = await verifyPassword(data.password, user.password_hash);
   
   if (!isValid) {
     throw new Error('Invalid email or password');
@@ -182,24 +186,31 @@ export async function login(data: z.infer<typeof LoginSchema>) {
   // Update last login
   await pool.query(
     `UPDATE users 
-     SET last_login_at = CURRENT_TIMESTAMP
+     SET last_login = CURRENT_TIMESTAMP
      WHERE id = $1`,
     [user.id]
   );
   
-  // Log audit trail
-  await pool.query(
-    `INSERT INTO audit_logs (organization_id, user_id, action)
-     VALUES ($1, $2, 'user_login')`,
-    [user.organizationId, user.id]
+  // Get user's roles
+  const rolesResult = await pool.query(
+    `SELECT r.name 
+     FROM roles r
+     JOIN user_roles ur ON r.id = ur.role_id
+     WHERE ur.user_id = $1`,
+    [user.id]
   );
+  
+  const roles = rolesResult.rows.map(r => r.name);
   
   return {
     id: user.id,
-    organizationId: user.organizationId,
+    organizationId: user.organization_id,
     email: user.email,
-    fullName: user.fullName,
-    role: user.role,
+    firstName: user.first_name,
+    lastName: user.last_name,
+    fullName: `${user.first_name} ${user.last_name}`,
+    roles: roles,
+    role: roles[0] || 'user', // Primary role for backward compatibility
   };
 }
 
@@ -207,12 +218,11 @@ export async function login(data: z.infer<typeof LoginSchema>) {
  * Get user by ID
  */
 export async function getUserById(userId: string) {
-  const result = await pool.query<UserWithOrganization>(
-    `SELECT u.id, u.organization_id, u.email, u.full_name, u.role,
-            o.name as organization_name, o.slug as organization_slug
+  const result = await pool.query<DbUser & { organization_name: string; organization_slug: string }>(
+    `SELECT u.*, o.name as organization_name, o.slug as organization_slug
      FROM users u
      JOIN organizations o ON u.organization_id = o.id
-     WHERE u.id = $1 AND u.deleted_at IS NULL`,
+     WHERE u.id = $1 AND u.is_active = TRUE`,
     [userId]
   );
   
@@ -222,66 +232,28 @@ export async function getUserById(userId: string) {
   
   const user = result.rows[0];
   
+  // Get user's roles
+  const rolesResult = await pool.query(
+    `SELECT r.name, r.permissions 
+     FROM roles r
+     JOIN user_roles ur ON r.id = ur.role_id
+     WHERE ur.user_id = $1`,
+    [userId]
+  );
+  
   return {
     id: user.id,
-    organizationId: user.organizationId,
+    organizationId: user.organization_id,
     email: user.email,
-    fullName: user.fullName,
-    role: user.role,
+    firstName: user.first_name,
+    lastName: user.last_name,
+    fullName: `${user.first_name} ${user.last_name}`,
+    roles: rolesResult.rows.map(r => r.name),
     organization: {
-      name: user.organizationName,
-      slug: user.organizationSlug,
+      name: user.organization_name,
+      slug: user.organization_slug,
     },
   };
-}
-
-/**
- * Store refresh token
- */
-export async function storeRefreshToken(userId: string, token: string, expiresIn: number) {
-  const expiresAt = new Date(Date.now() + expiresIn);
-  
-  await pool.query(
-    `INSERT INTO refresh_tokens (user_id, token, expires_at)
-     VALUES ($1, $2, $3)`,
-    [userId, token, expiresAt]
-  );
-}
-
-/**
- * Verify refresh token
- */
-export async function verifyRefreshToken(token: string) {
-  const result = await pool.query(
-    `SELECT user_id, expires_at
-     FROM refresh_tokens
-     WHERE token = $1 AND revoked_at IS NULL`,
-    [token]
-  );
-  
-  if (result.rows.length === 0) {
-    throw new Error('Invalid refresh token');
-  }
-  
-  const tokenData = result.rows[0];
-  
-  if (new Date(tokenData.expires_at) < new Date()) {
-    throw new Error('Refresh token expired');
-  }
-  
-  return tokenData.user_id;
-}
-
-/**
- * Revoke refresh token
- */
-export async function revokeRefreshToken(token: string) {
-  await pool.query(
-    `UPDATE refresh_tokens
-     SET revoked_at = CURRENT_TIMESTAMP
-     WHERE token = $1`,
-    [token]
-  );
 }
 
 /**
@@ -303,17 +275,28 @@ export async function isTokenBlacklisted(token: string): Promise<boolean> {
 /**
  * Verify user has required role
  */
-export function hasRole(userRole: string, requiredRole: string): boolean {
-  const roles = ['admin', 'tech', 'user'];
-  const userRoleIndex = roles.indexOf(userRole);
-  const requiredRoleIndex = roles.indexOf(requiredRole);
+export function hasRole(userRoles: string[], requiredRole: string): boolean {
+  // Admin has access to everything
+  if (userRoles.includes('admin')) {
+    return true;
+  }
   
-  // Admin has access to everything, tech has access to tech and user, user only to user
-  return userRoleIndex <= requiredRoleIndex;
+  // Check if user has the required role
+  return userRoles.includes(requiredRole);
+}
+
+/**
+ * Close connections
+ */
+export async function closeConnections() {
+  await pool.end();
+  await redis.quit();
 }
 
 // Export validation schemas
 export { RegisterSchema, LoginSchema };
 
-console.log('✅ Authentication Service Module Loaded');
+// Export types
+export type { DbUser, DbOrganization };
 
+console.log('✅ Authentication Service Module Loaded');
