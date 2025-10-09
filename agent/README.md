@@ -19,8 +19,8 @@ Cross-platform lightweight monitoring agent for NinjaIT platform. Collects syste
 
 ```bash
 # Clone repository
-git clone https://github.com/yossibmoha/NingaIT.git
-cd NingaIT/agent
+git clone https://github.com/yossibmoha/NinjaIT.git
+cd NinjaIT/agent
 
 # Download dependencies
 go mod download
@@ -34,7 +34,7 @@ sudo make install
 
 ### Pre-built Binaries
 
-Download from [Releases](https://github.com/yossibmoha/NingaIT/releases)
+Download from [Releases](https://github.com/yossibmoha/NinjaIT/releases)
 
 ## ⚙️ Configuration
 
@@ -281,5 +281,5 @@ Contributions welcome! Please read CONTRIBUTING.md for guidelines.
 ## 📞 Support
 
 - Documentation: https://docs.ninjait.io
-- Issues: https://github.com/yossibmoha/NingaIT/issues
+- Issues: https://github.com/yossibmoha/NinjaIT/issues
 - Discord: https://discord.gg/ninjait

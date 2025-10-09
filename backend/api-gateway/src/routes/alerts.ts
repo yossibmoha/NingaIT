@@ -53,43 +53,6 @@ export async function alertRoutes(fastify: FastifyInstance) {
 
   // GET /api/v1/alerts - List all alerts
   fastify.get('/', {
-    schema: {
-      headers: z.object({
-        Authorization: z.string(),
-      }),
-      querystring: z.object({
-        page: z.preprocess(Number, z.number().int().positive().default(1)).optional(),
-        limit: z.preprocess(Number, z.number().int().positive().max(100).default(20)).optional(),
-        severity: z.enum(['info', 'warning', 'error', 'critical']).optional(),
-        deviceId: z.string().uuid().optional(),
-        isResolved: z.preprocess((val) => val === 'true', z.boolean()).optional(),
-        startDate: z.string().datetime().optional(),
-        endDate: z.string().datetime().optional(),
-      }),
-      response: {
-        200: z.object({
-          total: z.number(),
-          page: z.number(),
-          limit: z.number(),
-          data: z.array(z.object({
-            id: z.string().uuid(),
-            ruleId: z.string().uuid(),
-            deviceId: z.string().uuid(),
-            metric: z.string(),
-            severity: z.string(),
-            message: z.string(),
-            currentValue: z.number(),
-            threshold: z.number(),
-            triggeredAt: z.string().datetime(),
-            resolvedAt: z.string().datetime().optional(),
-            isResolved: z.boolean(),
-          })),
-        }),
-      },
-      tags: ['Alerts'],
-      summary: 'List all alerts',
-      security: [{ BearerAuth: [] }],
-    },
     handler: async (request, reply) => {
       const { page, limit, severity, deviceId, isResolved, startDate, endDate } = request.query as any;
       

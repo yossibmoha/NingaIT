@@ -7,8 +7,8 @@ import (
 
 	influxdb2 "github.com/influxdata/influxdb-client-go/v2"
 	"github.com/influxdata/influxdb-client-go/v2/api"
-	"github.com/yossibmoha/NingaIT/backend/services/monitoring/internal/config"
-	"github.com/yossibmoha/NingaIT/backend/services/monitoring/pkg/models"
+	"github.com/yossibmoha/NinjaIT/backend/services/monitoring/internal/config"
+	"github.com/yossibmoha/NinjaIT/backend/services/monitoring/pkg/models"
 	log "github.com/sirupsen/logrus"
 )
 

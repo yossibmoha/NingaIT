@@ -59,14 +59,14 @@
 
 | # | Title | Priority | Status | Labels |
 |---|-------|----------|--------|--------|
-| [#1](https://github.com/yossibmoha/NingaIT/issues/1) | 🏗️ Infrastructure Setup & Database Verification | 🔴 Critical | 🚀 In Progress | phase-1, infrastructure |
-| [#2](https://github.com/yossibmoha/NingaIT/issues/2) | 🔐 Authentication Service Implementation | 🔴 Critical | ⏳ Todo | phase-1, backend |
-| [#3](https://github.com/yossibmoha/NingaIT/issues/3) | 🎨 Frontend Foundation (Next.js + Ant Design) | 🟠 High | 🚀 In Progress | phase-1, frontend |
-| [#4](https://github.com/yossibmoha/NingaIT/issues/4) | 💻 Go Agent Foundation | 🟠 High | ⏳ Todo | phase-1, agent |
-| [#5](https://github.com/yossibmoha/NingaIT/issues/5) | 📊 Monitoring Service (Go) | 🟠 High | ⏳ Todo | phase-1, backend |
-| [#6](https://github.com/yossibmoha/NingaIT/issues/6) | 🧪 E2E Testing Framework (Playwright) | 🟡 Medium | ⏳ Todo | phase-1, test |
+| [#1](https://github.com/yossibmoha/NinjaIT/issues/1) | 🏗️ Infrastructure Setup & Database Verification | 🔴 Critical | 🚀 In Progress | phase-1, infrastructure |
+| [#2](https://github.com/yossibmoha/NinjaIT/issues/2) | 🔐 Authentication Service Implementation | 🔴 Critical | ⏳ Todo | phase-1, backend |
+| [#3](https://github.com/yossibmoha/NinjaIT/issues/3) | 🎨 Frontend Foundation (Next.js + Ant Design) | 🟠 High | 🚀 In Progress | phase-1, frontend |
+| [#4](https://github.com/yossibmoha/NinjaIT/issues/4) | 💻 Go Agent Foundation | 🟠 High | ⏳ Todo | phase-1, agent |
+| [#5](https://github.com/yossibmoha/NinjaIT/issues/5) | 📊 Monitoring Service (Go) | 🟠 High | ⏳ Todo | phase-1, backend |
+| [#6](https://github.com/yossibmoha/NinjaIT/issues/6) | 🧪 E2E Testing Framework (Playwright) | 🟡 Medium | ⏳ Todo | phase-1, test |
 
-**All issues**: https://github.com/yossibmoha/NingaIT/issues
+**All issues**: https://github.com/yossibmoha/NinjaIT/issues
 
 ### ✅ **Automation Script Created**
 - **File**: `scripts/github-project-sync.sh`
@@ -85,16 +85,16 @@ open https://github.com/users/yossibmoha/projects/3
 
 ### **View All Issues**
 ```bash
-gh issue list --repo yossibmoha/NingaIT
+gh issue list --repo yossibmoha/NinjaIT
 # or
-open https://github.com/yossibmoha/NingaIT/issues
+open https://github.com/yossibmoha/NinjaIT/issues
 ```
 
 ### **Create New Issue and Add to Project**
 ```bash
 # Create issue
 gh issue create \
-  --repo yossibmoha/NingaIT \
+  --repo yossibmoha/NinjaIT \
   --title "Your Issue Title" \
   --body "Issue description" \
   --label "phase-1,priority-high" \
@@ -107,16 +107,16 @@ gh project item-add 3 --owner yossibmoha --url <ISSUE_URL>
 ### **Update Issue Status**
 ```bash
 # Close issue
-gh issue close 123 --repo yossibmoha/NingaIT
+gh issue close 123 --repo yossibmoha/NinjaIT
 
 # Reopen issue
-gh issue reopen 123 --repo yossibmoha/NingaIT
+gh issue reopen 123 --repo yossibmoha/NinjaIT
 
 # Add labels
-gh issue edit 123 --repo yossibmoha/NingaIT --add-label "status-in-progress"
+gh issue edit 123 --repo yossibmoha/NinjaIT --add-label "status-in-progress"
 
 # Remove labels
-gh issue edit 123 --repo yossibmoha/NingaIT --remove-label "status-in-progress"
+gh issue edit 123 --repo yossibmoha/NinjaIT --remove-label "status-in-progress"
 ```
 
 ### **Use Project Sync Script**
@@ -166,7 +166,7 @@ gh issue edit 123 --repo yossibmoha/NingaIT --remove-label "status-in-progress"
 ### **Create Issue with All Details**
 ```bash
 gh issue create \
-  --repo yossibmoha/NingaIT \
+  --repo yossibmoha/NinjaIT \
   --title "🚀 Feature: Add Device Monitoring Dashboard" \
   --body "## Description
 Complete monitoring dashboard for device health.
@@ -188,30 +188,30 @@ Complete monitoring dashboard for device health.
 ### **Search Issues**
 ```bash
 # Show open issues
-gh issue list --repo yossibmoha/NingaIT --state open
+gh issue list --repo yossibmoha/NinjaIT --state open
 
 # Show by label
-gh issue list --repo yossibmoha/NingaIT --label "phase-1"
+gh issue list --repo yossibmoha/NinjaIT --label "phase-1"
 
 # Show assigned to me
-gh issue list --repo yossibmoha/NingaIT --assignee "@me"
+gh issue list --repo yossibmoha/NinjaIT --assignee "@me"
 
 # Show by priority
-gh issue list --repo yossibmoha/NingaIT --label "priority-critical"
+gh issue list --repo yossibmoha/NinjaIT --label "priority-critical"
 ```
 
 ### **View Issue Details**
 ```bash
 # View issue in browser
-gh issue view 1 --repo yossibmoha/NingaIT --web
+gh issue view 1 --repo yossibmoha/NinjaIT --web
 
 # View in terminal
-gh issue view 1 --repo yossibmoha/NingaIT
+gh issue view 1 --repo yossibmoha/NinjaIT
 ```
 
 ### **Comment on Issues**
 ```bash
-gh issue comment 1 --repo yossibmoha/NingaIT --body "Updated infrastructure - all services running!"
+gh issue comment 1 --repo yossibmoha/NinjaIT --body "Updated infrastructure - all services running!"
 ```
 
 ---
@@ -223,12 +223,12 @@ gh issue comment 1 --repo yossibmoha/NingaIT --body "Updated infrastructure - al
 1. **Pick an Issue from Project Board**
    ```bash
    # View your assigned issues
-   gh issue list --repo yossibmoha/NingaIT --assignee "@me"
+   gh issue list --repo yossibmoha/NinjaIT --assignee "@me"
    ```
 
 2. **Mark as In Progress**
    ```bash
-   gh issue edit 2 --repo yossibmoha/NingaIT --add-label "status-in-progress"
+   gh issue edit 2 --repo yossibmoha/NinjaIT --add-label "status-in-progress"
    ```
 
 3. **Create Feature Branch**
@@ -265,7 +265,7 @@ gh issue comment 1 --repo yossibmoha/NingaIT --body "Updated infrastructure - al
    ```bash
    # Issue automatically closes if PR body has "Closes #2"
    # Or manually close:
-   gh issue close 2 --repo yossibmoha/NingaIT --comment "Completed and merged!"
+   gh issue close 2 --repo yossibmoha/NinjaIT --comment "Completed and merged!"
    ```
 
 ---
@@ -275,25 +275,25 @@ gh issue comment 1 --repo yossibmoha/NingaIT --body "Updated infrastructure - al
 ### **Sprint Progress**
 ```bash
 # Show all Phase 1 issues
-gh issue list --repo yossibmoha/NingaIT --label "phase-1"
+gh issue list --repo yossibmoha/NinjaIT --label "phase-1"
 
 # Show what's in progress
-gh issue list --repo yossibmoha/NingaIT --label "status-in-progress"
+gh issue list --repo yossibmoha/NinjaIT --label "status-in-progress"
 
 # Show what's blocked
-gh issue list --repo yossibmoha/NingaIT --label "status-blocked"
+gh issue list --repo yossibmoha/NinjaIT --label "status-blocked"
 ```
 
 ### **Team Coordination**
 ```bash
 # Show all critical items
-gh issue list --repo yossibmoha/NingaIT --label "priority-critical"
+gh issue list --repo yossibmoha/NinjaIT --label "priority-critical"
 
 # Show backend tasks
-gh issue list --repo yossibmoha/NingaIT --label "component-backend"
+gh issue list --repo yossibmoha/NinjaIT --label "component-backend"
 
 # Show frontend tasks
-gh issue list --repo yossibmoha/NingaIT --label "component-frontend"
+gh issue list --repo yossibmoha/NinjaIT --label "component-frontend"
 ```
 
 ---
@@ -301,11 +301,11 @@ gh issue list --repo yossibmoha/NingaIT --label "component-frontend"
 ## 🔗 Quick Links
 
 ### **GitHub**
-- **Repository**: https://github.com/yossibmoha/NingaIT
+- **Repository**: https://github.com/yossibmoha/NinjaIT
 - **Project Board**: https://github.com/users/yossibmoha/projects/3
-- **Issues**: https://github.com/yossibmoha/NingaIT/issues
-- **Pull Requests**: https://github.com/yossibmoha/NingaIT/pulls
-- **Actions**: https://github.com/yossibmoha/NingaIT/actions
+- **Issues**: https://github.com/yossibmoha/NinjaIT/issues
+- **Pull Requests**: https://github.com/yossibmoha/NinjaIT/pulls
+- **Actions**: https://github.com/yossibmoha/NinjaIT/actions
 
 ### **Documentation**
 - Sprint Progress: `docs/SPRINT_1_PROGRESS.md`

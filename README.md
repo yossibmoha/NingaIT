@@ -7,8 +7,8 @@
 **Enterprise-grade IT management platform combining RMM, PSA, and AI-powered automation**
 
 [![License](https://img.shields.io/badge/license-Proprietary-blue.svg)](LICENSE)
-[![Version](https://img.shields.io/badge/version-0.2.0--alpha-orange.svg)](https://github.com/yossibmoha/NingaIT/releases)
-[![Build Status](https://img.shields.io/badge/build-passing-brightgreen.svg)](https://github.com/yossibmoha/NingaIT/actions)
+[![Version](https://img.shields.io/badge/version-0.2.0--alpha-orange.svg)](https://github.com/yossibmoha/NinjaIT/releases)
+[![Build Status](https://img.shields.io/badge/build-passing-brightgreen.svg)](https://github.com/yossibmoha/NinjaIT/actions)
 [![Phase 1](https://img.shields.io/badge/Phase%201-Complete%20✅-success.svg)](PHASE_1_FINAL_REPORT.md)
 [![Phase 2](https://img.shields.io/badge/Phase%202-Complete%20✅-success.svg)](PHASE_2_FINAL_REPORT.md)
 [![Documentation](https://img.shields.io/badge/docs-latest-blue.svg)](docs/)
@@ -239,8 +239,8 @@ NinjaIT is built on a modern, scalable microservices architecture:
 
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/yossibmoha/NingaIT.git
-   cd NingaIT
+   git clone https://github.com/yossibmoha/NinjaIT.git
+   cd NinjaIT
    ```
 
 2. **Set up environment variables**

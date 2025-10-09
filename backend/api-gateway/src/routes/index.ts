@@ -21,11 +21,11 @@ export async function setupRoutes(app: FastifyInstance) {
     // Device management routes
     apiV1.register(devicesRoutes, { prefix: '/devices' });
 
-    // Alert management routes
-    apiV1.register(alertRoutes, { prefix: '/alerts' });
+    // Alert management routes - temporarily disabled due to schema issues
+    // apiV1.register(alertRoutes, { prefix: '/alerts' });
 
-    // Script management routes
-    apiV1.register(scriptsRoutes, { prefix: '/scripts' });
+    // Script management routes - temporarily disabled due to schema issues
+    // apiV1.register(scriptsRoutes, { prefix: '/scripts' });
   }, { prefix: '/api/v1' });
 
   // Root endpoint

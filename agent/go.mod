@@ -1,4 +1,4 @@
-module github.com/yossibmoha/NingaIT/agent
+module github.com/yossibmoha/NinjaIT/agent
 
 go 1.21
 

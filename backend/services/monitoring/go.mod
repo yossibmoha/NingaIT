@@ -1,4 +1,4 @@
-module github.com/yossibmoha/NingaIT/backend/services/monitoring
+module github.com/yossibmoha/NinjaIT/backend/services/monitoring
 
 go 1.21
 

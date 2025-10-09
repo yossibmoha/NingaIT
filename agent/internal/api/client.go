@@ -9,8 +9,8 @@ import (
 	"time"
 
 	"github.com/gorilla/websocket"
-	"github.com/yossibmoha/NingaIT/agent/internal/config"
-	"github.com/yossibmoha/NingaIT/agent/pkg/models"
+	"github.com/yossibmoha/NinjaIT/agent/internal/config"
+	"github.com/yossibmoha/NinjaIT/agent/pkg/models"
 	log "github.com/sirupsen/logrus"
 )
 

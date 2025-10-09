@@ -11,9 +11,9 @@ import (
 	"github.com/gofiber/fiber/v2/middleware/limiter"
 	"github.com/gofiber/fiber/v2/middleware/logger"
 	"github.com/gofiber/fiber/v2/middleware/recover"
-	"github.com/yossibmoha/NingaIT/backend/services/monitoring/internal/config"
-	"github.com/yossibmoha/NingaIT/backend/services/monitoring/internal/storage"
-	"github.com/yossibmoha/NingaIT/backend/services/monitoring/pkg/models"
+	"github.com/yossibmoha/NinjaIT/backend/services/monitoring/internal/config"
+	"github.com/yossibmoha/NinjaIT/backend/services/monitoring/internal/storage"
+	"github.com/yossibmoha/NinjaIT/backend/services/monitoring/pkg/models"
 	log "github.com/sirupsen/logrus"
 )
 

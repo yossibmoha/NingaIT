@@ -38,8 +38,8 @@ Before contributing, ensure you have:
 
 ### Finding an Issue to Work On
 
-1. **Good First Issues**: Look for issues labeled [`good first issue`](https://github.com/yossibmoha/NingaIT/labels/good%20first%20issue)
-2. **Help Wanted**: Check issues labeled [`help wanted`](https://github.com/yossibmoha/NingaIT/labels/help%20wanted)
+1. **Good First Issues**: Look for issues labeled [`good first issue`](https://github.com/yossibmoha/NinjaIT/labels/good%20first%20issue)
+2. **Help Wanted**: Check issues labeled [`help wanted`](https://github.com/yossibmoha/NinjaIT/labels/help%20wanted)
 3. **Your Own Ideas**: Have an idea? Create an issue first to discuss it!
 
 ### Communication
@@ -549,7 +549,7 @@ Don't hesitate to ask questions! We're here to help:
 
 - **Discord**: [discord.gg/ninjait](https://discord.gg/ninjait)
 - **Email**: team@ninjait.io
-- **GitHub Discussions**: [Ask a question](https://github.com/yossibmoha/NingaIT/discussions)
+- **GitHub Discussions**: [Ask a question](https://github.com/yossibmoha/NinjaIT/discussions)
 
 ---
 

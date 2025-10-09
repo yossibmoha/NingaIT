@@ -70,6 +70,7 @@ async function start() {
     ╚════════════════════════════════════════════════════════╝
     `);
   } catch (err) {
+    console.error('❌ Error starting API Gateway:', err);
     logger.error('❌ Error starting API Gateway:', err);
     process.exit(1);
   }

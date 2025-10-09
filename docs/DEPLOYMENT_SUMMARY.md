@@ -2,7 +2,7 @@
 
 **Date**: October 8, 2025  
 **Status**: ✅ Successfully Deployed to GitHub  
-**Repository**: https://github.com/yossibmoha/NingaIT
+**Repository**: https://github.com/yossibmoha/NinjaIT
 
 ---
 
@@ -101,12 +101,12 @@ Documented 8 distinct market segments:
 
 | Resource | URL |
 |----------|-----|
-| **Repository** | https://github.com/yossibmoha/NingaIT |
+| **Repository** | https://github.com/yossibmoha/NinjaIT |
 | **GitHub Project** | https://github.com/users/yossibmoha/projects/3 |
-| **Actions (CI/CD)** | https://github.com/yossibmoha/NingaIT/actions |
-| **Issues** | https://github.com/yossibmoha/NingaIT/issues |
-| **Settings** | https://github.com/yossibmoha/NingaIT/settings |
-| **Milestones** | https://github.com/yossibmoha/NingaIT/milestones |
+| **Actions (CI/CD)** | https://github.com/yossibmoha/NinjaIT/actions |
+| **Issues** | https://github.com/yossibmoha/NinjaIT/issues |
+| **Settings** | https://github.com/yossibmoha/NinjaIT/settings |
+| **Milestones** | https://github.com/yossibmoha/NinjaIT/milestones |
 
 ---
 
@@ -117,7 +117,7 @@ Documented 8 distinct market segments:
 
 **Steps**:
 1. Go to: https://github.com/users/yossibmoha/projects/3/settings
-2. OR: Go to https://github.com/yossibmoha/NingaIT → Projects tab
+2. OR: Go to https://github.com/yossibmoha/NinjaIT → Projects tab
 3. Click "Link a project"
 4. Select your project from the list
 5. Enable automation workflows
@@ -126,7 +126,7 @@ Documented 8 distinct market segments:
 **Action**: Add description, topics, and enable features
 
 **Steps**:
-1. Go to: https://github.com/yossibmoha/NingaIT/settings
+1. Go to: https://github.com/yossibmoha/NinjaIT/settings
 2. Add description:
    ```
    Next-gen all-in-one IT management platform (RMM + PSA + Billing) 
@@ -144,7 +144,7 @@ Documented 8 distinct market segments:
 **Action**: Protect your code and dependencies
 
 **Steps**:
-1. Go to: https://github.com/yossibmoha/NingaIT/settings/security_analysis
+1. Go to: https://github.com/yossibmoha/NinjaIT/settings/security_analysis
 2. Enable:
    - ✅ Dependabot alerts
    - ✅ Dependabot security updates
@@ -155,7 +155,7 @@ Documented 8 distinct market segments:
 **Action**: Protect the main branch
 
 **Steps**:
-1. Go to: https://github.com/yossibmoha/NingaIT/settings/branches
+1. Go to: https://github.com/yossibmoha/NinjaIT/settings/branches
 2. Click "Add rule"
 3. Branch name pattern: `main`
 4. Enable:
@@ -168,7 +168,7 @@ Documented 8 distinct market segments:
 **Action**: Set up development tasks
 
 **Steps**:
-1. Go to: https://github.com/yossibmoha/NingaIT/issues
+1. Go to: https://github.com/yossibmoha/NinjaIT/issues
 2. Create epic issues for each phase:
    - Phase 1: Foundation (Months 1-6)
    - Phase 2: Core RMM (Months 7-12)
@@ -182,7 +182,7 @@ Documented 8 distinct market segments:
 **Action**: Track progress by phase
 
 **Steps**:
-1. Go to: https://github.com/yossibmoha/NingaIT/milestones
+1. Go to: https://github.com/yossibmoha/NinjaIT/milestones
 2. Create milestones:
    - Phase 1 - Foundation (Due: Q2 2026)
    - Phase 2 - Core RMM (Due: Q4 2026)
@@ -240,8 +240,8 @@ NinjaIT/
 
 1. **Clone Repository**:
    ```bash
-   git clone https://github.com/yossibmoha/NingaIT.git
-   cd NingaIT
+   git clone https://github.com/yossibmoha/NinjaIT.git
+   cd NinjaIT
    ```
 
 2. **Start Development Environment**:
@@ -374,8 +374,8 @@ perf(monitoring): optimize metrics collection by 40%
 - See `DEVELOPMENT.md` for environment setup
 
 ### Questions?
-- Create a GitHub Discussion: https://github.com/yossibmoha/NingaIT/discussions
-- Open an issue: https://github.com/yossibmoha/NingaIT/issues
+- Create a GitHub Discussion: https://github.com/yossibmoha/NinjaIT/discussions
+- Open an issue: https://github.com/yossibmoha/NinjaIT/issues
 - Email: team@ninjait.io
 
 ---
@@ -420,7 +420,7 @@ You now have a **production-ready project foundation** with:
 
 **Your next step**: Link the repository to your GitHub Project and start creating issues!
 
-**Repository**: https://github.com/yossibmoha/NingaIT  
+**Repository**: https://github.com/yossibmoha/NinjaIT  
 **Project**: https://github.com/users/yossibmoha/projects/3  
 
 ---

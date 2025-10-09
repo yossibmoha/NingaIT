@@ -10,9 +10,9 @@ import (
 	"syscall"
 	"time"
 
-	"github.com/yossibmoha/NingaIT/agent/internal/config"
-	"github.com/yossibmoha/NingaIT/agent/internal/monitor"
-	"github.com/yossibmoha/NingaIT/agent/internal/api"
+	"github.com/yossibmoha/NinjaIT/agent/internal/config"
+	"github.com/yossibmoha/NinjaIT/agent/internal/monitor"
+	"github.com/yossibmoha/NinjaIT/agent/internal/api"
 	log "github.com/sirupsen/logrus"
 )
 

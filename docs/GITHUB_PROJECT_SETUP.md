@@ -2,7 +2,7 @@
 
 ## ✅ Repository Status
 
-**Repository**: https://github.com/yossibmoha/NingaIT  
+**Repository**: https://github.com/yossibmoha/NinjaIT  
 **Branch**: main  
 **Status**: ✅ Successfully pushed  
 **Files**: 30 files, 9,706 lines of code  
@@ -28,11 +28,11 @@ Go to: https://github.com/users/yossibmoha/projects/3/views/1
 2. Select **"Settings"**
 3. In the left sidebar, click **"Manage access"**
 4. Under **"Repository access"**, click **"Add repository"**
-5. Search for **"yossibmoha/NingaIT"**
+5. Search for **"yossibmoha/NinjaIT"**
 6. Click **"Add"**
 
 **Option B: Link from Repository**
-1. Go to: https://github.com/yossibmoha/NingaIT
+1. Go to: https://github.com/yossibmoha/NinjaIT
 2. Click **"Projects"** tab
 3. Click **"Link a project"**
 4. Select your project from the list
@@ -53,7 +53,7 @@ Go to: https://github.com/users/yossibmoha/projects/3/views/1
 
 Create issues directly from the GitHub UI based on your project plan:
 
-1. **Go to Issues**: https://github.com/yossibmoha/NingaIT/issues
+1. **Go to Issues**: https://github.com/yossibmoha/NinjaIT/issues
 
 2. **Create Epic Issues** (using issue templates):
 
@@ -159,7 +159,7 @@ Deep integration with hosting platforms and cloud providers
 
 ### 3. **Create Milestones**
 
-Go to: https://github.com/yossibmoha/NingaIT/milestones
+Go to: https://github.com/yossibmoha/NinjaIT/milestones
 
 Create these milestones:
 - **Phase 1 - Foundation** (Due: Q2 2026)
@@ -171,7 +171,7 @@ Create these milestones:
 
 ### 4. **Configure Labels**
 
-Go to: https://github.com/yossibmoha/NingaIT/labels
+Go to: https://github.com/yossibmoha/NinjaIT/labels
 
 Create these labels:
 - `epic` (🎯 purple)
@@ -194,7 +194,7 @@ Create these labels:
 ## 🔧 Repository Settings to Configure
 
 ### 1. General Settings
-https://github.com/yossibmoha/NingaIT/settings
+https://github.com/yossibmoha/NinjaIT/settings
 
 - **Description**: `Next-gen all-in-one IT management platform (RMM + PSA + Billing) with AI automation for MSPs, hosting companies, and cloud providers`
 - **Website**: `https://ninjait.io` (when ready)
@@ -212,7 +212,7 @@ https://github.com/yossibmoha/NingaIT/settings
 - ❌ Wiki (optional, we have docs/)
 
 ### 3. Security Settings
-https://github.com/yossibmoha/NingaIT/settings/security_analysis
+https://github.com/yossibmoha/NinjaIT/settings/security_analysis
 
 Enable:
 - ✅ Dependabot alerts
@@ -221,7 +221,7 @@ Enable:
 - ✅ Code scanning (CodeQL)
 
 ### 4. Branch Protection
-https://github.com/yossibmoha/NingaIT/settings/branches
+https://github.com/yossibmoha/NinjaIT/settings/branches
 
 Protect `main` branch:
 - ✅ Require pull request before merging
@@ -233,7 +233,7 @@ Protect `main` branch:
 - ❌ Allow deletions
 
 ### 5. GitHub Actions
-https://github.com/yossibmoha/NingaIT/actions
+https://github.com/yossibmoha/NinjaIT/actions
 
 Your CI/CD pipeline should auto-enable with these workflows:
 - ✅ CI/CD Pipeline (`.github/workflows/ci.yml`)
@@ -416,7 +416,7 @@ Your NinjaIT repository is now live with:
 - ✅ CI/CD pipelines
 - ✅ Ready for team collaboration
 
-**Repository**: https://github.com/yossibmoha/NingaIT  
+**Repository**: https://github.com/yossibmoha/NinjaIT  
 **Project**: https://github.com/users/yossibmoha/projects/3  
 **Total Value**: $7.2B TAM across 8 market segments
 

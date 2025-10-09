@@ -6,14 +6,14 @@ All Phase 2 tasks have been added to the GitHub repository as issues and marked 
 
 | Issue # | Title | Status | Lines | Commit |
 |---------|-------|--------|-------|--------|
-| [#7](https://github.com/yossibmoha/NingaIT/issues/7) | Phase 2.1: Device Management UI | ✅ Closed | 714 | 5dcce97 |
-| [#8](https://github.com/yossibmoha/NingaIT/issues/8) | Phase 2.2: Device API | ✅ Closed | 400+ | 51c628c |
-| [#9](https://github.com/yossibmoha/NingaIT/issues/9) | Phase 2.3: Real-time WebSocket | ✅ Closed | 1,045 | 0992597 |
-| [#10](https://github.com/yossibmoha/NingaIT/issues/10) | Phase 2.4: Alert System | ✅ Closed | 1,930 | 9b2b198 |
-| [#11](https://github.com/yossibmoha/NingaIT/issues/11) | Phase 2.5: Script Execution | ✅ Closed | 900+ | f990949 |
-| [#12](https://github.com/yossibmoha/NingaIT/issues/12) | Phase 2.6: Dashboard Enhancement | ✅ Closed | 750+ | 30ea8f0 |
-| [#13](https://github.com/yossibmoha/NingaIT/issues/13) | Phase 2.7: User Management | ✅ Closed | 600+ | d50f99d |
-| [#14](https://github.com/yossibmoha/NingaIT/issues/14) | Phase 2.8: Reporting System | ✅ Closed | 700+ | 3e03058 |
+| [#7](https://github.com/yossibmoha/NinjaIT/issues/7) | Phase 2.1: Device Management UI | ✅ Closed | 714 | 5dcce97 |
+| [#8](https://github.com/yossibmoha/NinjaIT/issues/8) | Phase 2.2: Device API | ✅ Closed | 400+ | 51c628c |
+| [#9](https://github.com/yossibmoha/NinjaIT/issues/9) | Phase 2.3: Real-time WebSocket | ✅ Closed | 1,045 | 0992597 |
+| [#10](https://github.com/yossibmoha/NinjaIT/issues/10) | Phase 2.4: Alert System | ✅ Closed | 1,930 | 9b2b198 |
+| [#11](https://github.com/yossibmoha/NinjaIT/issues/11) | Phase 2.5: Script Execution | ✅ Closed | 900+ | f990949 |
+| [#12](https://github.com/yossibmoha/NinjaIT/issues/12) | Phase 2.6: Dashboard Enhancement | ✅ Closed | 750+ | 30ea8f0 |
+| [#13](https://github.com/yossibmoha/NinjaIT/issues/13) | Phase 2.7: User Management | ✅ Closed | 600+ | d50f99d |
+| [#14](https://github.com/yossibmoha/NinjaIT/issues/14) | Phase 2.8: Reporting System | ✅ Closed | 700+ | 3e03058 |
 
 ## 📊 Summary
 
@@ -25,7 +25,7 @@ All Phase 2 tasks have been added to the GitHub repository as issues and marked 
 ## 🔗 Links
 
 - **GitHub Project:** https://github.com/users/yossibmoha/projects/3
-- **Repository:** https://github.com/yossibmoha/NingaIT
+- **Repository:** https://github.com/yossibmoha/NinjaIT
 - **Phase 2 Final Report:** [PHASE_2_FINAL_REPORT.md](PHASE_2_FINAL_REPORT.md)
 
 ## 📝 Issue Details

@@ -138,11 +138,11 @@ NinjaIT/
 
 ## 🔗 **Important Links**
 
-- **Repository:** https://github.com/yossibmoha/NingaIT
+- **Repository:** https://github.com/yossibmoha/NinjaIT
 - **GitHub Project:** https://github.com/users/yossibmoha/projects/3
 - **Phase 1 Report:** [PHASE_1_FINAL_REPORT.md](PHASE_1_FINAL_REPORT.md)
 - **Phase 2 Report:** [PHASE_2_FINAL_REPORT.md](PHASE_2_FINAL_REPORT.md)
-- **GitHub Issues:** https://github.com/yossibmoha/NingaIT/issues
+- **GitHub Issues:** https://github.com/yossibmoha/NinjaIT/issues
 
 ---
 

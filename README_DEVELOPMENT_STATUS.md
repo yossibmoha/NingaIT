@@ -218,7 +218,7 @@ NinjaIT/
 ## 🔗 Quick Links
 
 ### Repository
-- **GitHub**: https://github.com/yossibmoha/NingaIT
+- **GitHub**: https://github.com/yossibmoha/NinjaIT
 - **Project Board**: https://github.com/users/yossibmoha/projects/3
 
 ### Documentation
@@ -241,8 +241,8 @@ NinjaIT/
 
 ### 1. Clone and Setup
 ```bash
-git clone https://github.com/yossibmoha/NingaIT.git
-cd NingaIT
+git clone https://github.com/yossibmoha/NinjaIT.git
+cd NinjaIT
 ```
 
 ### 2. Start Infrastructure

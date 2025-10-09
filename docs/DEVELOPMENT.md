@@ -38,8 +38,8 @@ Before you begin, ensure you have the following installed:
 ### 1. Clone the Repository
 
 ```bash
-git clone https://github.com/yossibmoha/NingaIT.git
-cd NingaIT
+git clone https://github.com/yossibmoha/NinjaIT.git
+cd NinjaIT
 ```
 
 ### 2. Environment Configuration

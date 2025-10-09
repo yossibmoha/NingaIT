@@ -105,6 +105,6 @@ Examples:
 
 ---
 
-[Unreleased]: https://github.com/yossibmoha/NingaIT/compare/v0.1.0-alpha...HEAD
-[0.1.0-alpha]: https://github.com/yossibmoha/NingaIT/releases/tag/v0.1.0-alpha
+[Unreleased]: https://github.com/yossibmoha/NinjaIT/compare/v0.1.0-alpha...HEAD
+[0.1.0-alpha]: https://github.com/yossibmoha/NinjaIT/releases/tag/v0.1.0-alpha
 

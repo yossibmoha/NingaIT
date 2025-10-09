@@ -220,7 +220,7 @@ Docker Services:             9 services
 
 ### Repository Status
 ```
-Repository: https://github.com/yossibmoha/NingaIT
+Repository: https://github.com/yossibmoha/NinjaIT
 Branch: main
 Latest Commit: d664c25
 Commits Today: 2
@@ -357,7 +357,7 @@ Lines Added: 1,774 lines
 - [GitHub Project](https://github.com/users/yossibmoha/projects/3)
 
 ### Quick Links
-- **Repository**: https://github.com/yossibmoha/NingaIT
+- **Repository**: https://github.com/yossibmoha/NinjaIT
 - **Swagger Docs**: http://localhost:8000/docs (when running)
 - **Adminer UI**: http://localhost:8080
 - **ClickHouse UI**: http://localhost:8082

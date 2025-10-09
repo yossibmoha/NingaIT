@@ -444,7 +444,7 @@ WebSocket connections are subject to the same rate limiting as HTTP requests:
 ## Support
 
 For issues or questions:
-- GitHub Issues: https://github.com/yossibmoha/NingaIT/issues
+- GitHub Issues: https://github.com/yossibmoha/NinjaIT/issues
 - Documentation: https://docs.ninjait.io
 - Email: support@ninjait.io
 

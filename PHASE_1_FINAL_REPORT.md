@@ -734,9 +734,9 @@ With Phase 1 complete, the platform has a solid foundation. Phase 2 can focus on
 
 ## 🔗 Links
 
-- **Repository:** https://github.com/yossibmoha/NingaIT
+- **Repository:** https://github.com/yossibmoha/NinjaIT
 - **Project Board:** https://github.com/users/yossibmoha/projects/3
-- **Issues:** https://github.com/yossibmoha/NingaIT/issues
+- **Issues:** https://github.com/yossibmoha/NinjaIT/issues
 
 ---
 

@@ -9,9 +9,9 @@ import (
 	"syscall"
 	"time"
 
-	"github.com/yossibmoha/NingaIT/backend/services/monitoring/internal/api"
-	"github.com/yossibmoha/NingaIT/backend/services/monitoring/internal/config"
-	"github.com/yossibmoha/NingaIT/backend/services/monitoring/internal/storage"
+	"github.com/yossibmoha/NinjaIT/backend/services/monitoring/internal/api"
+	"github.com/yossibmoha/NinjaIT/backend/services/monitoring/internal/config"
+	"github.com/yossibmoha/NinjaIT/backend/services/monitoring/internal/storage"
 	log "github.com/sirupsen/logrus"
 )
 

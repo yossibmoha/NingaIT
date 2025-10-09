@@ -84,7 +84,7 @@ Implement end-to-end data flow from agent to storage to UI.
 ## 🔗 Links
 
 - **GitHub Project:** https://github.com/users/yossibmoha/projects/3
-- **Phase 3 Issues:** https://github.com/yossibmoha/NingaIT/issues?q=label%3Aphase-3
+- **Phase 3 Issues:** https://github.com/yossibmoha/NinjaIT/issues?q=label%3Aphase-3
 
 ---
 

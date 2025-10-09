@@ -646,9 +646,9 @@ docker-compose -f docker-compose.prod.yml up -d
 
 ## 🔗 Links
 
-- **Repository:** https://github.com/yossibmoha/NingaIT
+- **Repository:** https://github.com/yossibmoha/NinjaIT
 - **Project Board:** https://github.com/users/yossibmoha/projects/3
-- **Issues:** https://github.com/yossibmoha/NingaIT/issues
+- **Issues:** https://github.com/yossibmoha/NinjaIT/issues
 
 ---
 

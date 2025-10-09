@@ -18,7 +18,7 @@
 set -e
 
 # Configuration
-REPO="yossibmoha/NingaIT"
+REPO="yossibmoha/NinjaIT"
 PROJECT_NUMBER=3
 PROJECT_OWNER="yossibmoha"
 

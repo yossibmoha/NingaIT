@@ -1,7 +1,7 @@
 # GitHub Project Integration Guide
 
 **Project URL**: https://github.com/users/yossibmoha/projects/3  
-**Repository**: https://github.com/yossibmoha/NingaIT
+**Repository**: https://github.com/yossibmoha/NinjaIT
 
 ---
 
@@ -16,7 +16,7 @@ This guide explains how to use GitHub Projects to track and manage NinjaIT devel
 ### 1. Link Repository to Project
 
 **Steps**:
-1. Go to: https://github.com/yossibmoha/NingaIT
+1. Go to: https://github.com/yossibmoha/NinjaIT
 2. Click on **"Projects"** tab
 3. Click **"Link a project"**
 4. Select: https://github.com/users/yossibmoha/projects/3
@@ -26,7 +26,7 @@ This guide explains how to use GitHub Projects to track and manage NinjaIT devel
 1. Go to: https://github.com/users/yossibmoha/projects/3/settings
 2. Click **"Manage access"**
 3. Click **"Add repository"**
-4. Search for **"yossibmoha/NingaIT"**
+4. Search for **"yossibmoha/NinjaIT"**
 5. Click **"Add"**
 
 ---
@@ -53,7 +53,7 @@ This guide explains how to use GitHub Projects to track and manage NinjaIT devel
 ### From Issues
 
 **Create Issue with Project Assignment**:
-1. Go to: https://github.com/yossibmoha/NingaIT/issues/new
+1. Go to: https://github.com/yossibmoha/NinjaIT/issues/new
 2. Fill in issue details
 3. On the right sidebar, under **"Projects"**:
    - Click ⚙️ Settings
@@ -369,7 +369,7 @@ Every week, review:
 
 ### Create Milestones
 
-Go to: https://github.com/yossibmoha/NingaIT/milestones/new
+Go to: https://github.com/yossibmoha/NinjaIT/milestones/new
 
 **Recommended Milestones**:
 
@@ -410,7 +410,7 @@ Configure notifications:
 2. Under "Watching":
    - ✅ Participating
    - ✅ @mentions
-   - ✅ Custom: Repository (yossibmoha/NingaIT)
+   - ✅ Custom: Repository (yossibmoha/NinjaIT)
 
 ### Project Notifications
 
@@ -518,14 +518,14 @@ What actually happens
 ### Resources
 - **GitHub Projects Docs**: https://docs.github.com/en/issues/planning-and-tracking-with-projects
 - **Project Board**: https://github.com/users/yossibmoha/projects/3
-- **Repository Issues**: https://github.com/yossibmoha/NingaIT/issues
-- **Documentation**: https://github.com/yossibmoha/NingaIT/tree/main/docs
+- **Repository Issues**: https://github.com/yossibmoha/NinjaIT/issues
+- **Documentation**: https://github.com/yossibmoha/NinjaIT/tree/main/docs
 
 ### Quick Links
-- [Create New Issue](https://github.com/yossibmoha/NingaIT/issues/new)
+- [Create New Issue](https://github.com/yossibmoha/NinjaIT/issues/new)
 - [View Project Board](https://github.com/users/yossibmoha/projects/3)
-- [View Milestones](https://github.com/yossibmoha/NingaIT/milestones)
-- [Repository Settings](https://github.com/yossibmoha/NingaIT/settings)
+- [View Milestones](https://github.com/yossibmoha/NinjaIT/milestones)
+- [Repository Settings](https://github.com/yossibmoha/NinjaIT/settings)
 
 ---
 
