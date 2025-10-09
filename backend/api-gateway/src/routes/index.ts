@@ -3,7 +3,7 @@
  */
 
 import { FastifyInstance } from 'fastify';
-import authRoutes from './auth';
+import authRoutes from './auth-v2'; // Use auth-v2 which has full implementation
 import usersRoutes from './users';
 import devicesRoutes from './devices';
 import { alertRoutes } from './alerts';
@@ -15,7 +15,7 @@ import { docsRoutes } from './docs';
 export async function setupRoutes(app: FastifyInstance) {
   // API v1 routes
   app.register(async (apiV1) => {
-    // Authentication routes
+    // Authentication routes (using auth-v2 with full implementation)
     apiV1.register(authRoutes, { prefix: '/auth' });
 
     // User management routes
