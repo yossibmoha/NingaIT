@@ -99,7 +99,7 @@ export default function AlertsPage() {
   const [ruleModalVisible, setRuleModalVisible] = useState(false);
   const [channelModalVisible, setChannelModalVisible] = useState(false);
   const [editingRule, setEditingRule] = useState<AlertRule | null>(null);
-  const [editingChannel, setEditingChannel | null>(null);
+  const [editingChannel, setEditingChannel] = useState<NotificationChannel | null>(null);
   const [form] = Form.useForm();
   const [channelForm] = Form.useForm();
 
