@@ -3,7 +3,7 @@
  */
 
 import { FastifyInstance } from 'fastify';
-import { authenticate, authorize } from '../middleware/auth';
+import { authenticate, requireRole } from '../middleware/auth';
 
 export default async function deviceRoutes(app: FastifyInstance) {
   // List all devices with pagination, search, and filters
@@ -149,7 +149,7 @@ export default async function deviceRoutes(app: FastifyInstance) {
 
   // Create new device
   app.post('/devices', {
-    onRequest: [authenticate, authorize('admin')],
+    onRequest: [authenticate, requireRole('admin')],
     schema: {
       tags: ['devices'],
       description: 'Register a new device',
@@ -199,7 +199,7 @@ export default async function deviceRoutes(app: FastifyInstance) {
 
   // Update device
   app.put('/devices/:id', {
-    onRequest: [authenticate, authorize('admin')],
+    onRequest: [authenticate, requireRole('admin')],
     schema: {
       tags: ['devices'],
       description: 'Update device',
@@ -242,7 +242,7 @@ export default async function deviceRoutes(app: FastifyInstance) {
 
   // Delete device
   app.delete('/devices/:id', {
-    onRequest: [authenticate, authorize('admin')],
+    onRequest: [authenticate, requireRole('admin')],
     schema: {
       tags: ['devices'],
       description: 'Delete device',
@@ -408,7 +408,7 @@ export default async function deviceRoutes(app: FastifyInstance) {
 
   // Execute script on device
   app.post('/devices/:id/scripts', {
-    onRequest: [authenticate, authorize('tech')],
+    onRequest: [authenticate, requireRole('technician')],
     schema: {
       tags: ['devices'],
       description: 'Execute script on device',
