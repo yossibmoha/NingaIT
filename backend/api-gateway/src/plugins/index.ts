@@ -26,14 +26,14 @@ export async function setupPlugins(app: FastifyInstance) {
     credentials: config.cors.credentials,
   });
 
-  // Rate limiting
-  await app.register(rateLimit, {
-    max: config.rateLimit.max,
-    timeWindow: config.rateLimit.timeWindow,
-    cache: 10000,
-    allowList: ['127.0.0.1'],
-    redis: null, // TODO: Connect to Dragonfly for distributed rate limiting
-  });
+  // Rate limiting - TEMPORARILY DISABLED FOR DEBUGGING
+  // await app.register(rateLimit, {
+  //   max: config.rateLimit.max,
+  //   timeWindow: config.rateLimit.timeWindow,
+  //   cache: 10000,
+  //   allowList: ['127.0.0.1'],
+  //   redis: null, // TODO: Connect to Dragonfly for distributed rate limiting
+  // });
 
   // JWT
   await app.register(jwt, {
