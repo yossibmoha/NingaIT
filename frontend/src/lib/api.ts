@@ -5,7 +5,7 @@
 import axios, { AxiosError, InternalAxiosRequestConfig } from 'axios'
 import { message } from 'antd'
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001'
+const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000/api/v1'
 
 export const api = axios.create({
   baseURL: API_URL,
@@ -48,7 +48,7 @@ api.interceptors.response.use(
           throw new Error('No refresh token')
         }
 
-        // Refresh token
+        // Refresh token (use direct axios to avoid interceptor loop)
         const { data } = await axios.post(`${API_URL}/auth/refresh`, {
           refreshToken,
         })

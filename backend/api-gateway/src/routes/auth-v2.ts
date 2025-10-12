@@ -139,6 +139,12 @@ export default async function authRoutes(app: FastifyInstance) {
       tags: ['auth'],
       description: 'Logout user (invalidate tokens)',
       security: [{ bearerAuth: [] }],
+      body: {
+        type: 'object',
+        properties: {
+          refreshToken: { type: 'string' },
+        },
+      },
       response: {
         200: {
           type: 'object',
@@ -151,10 +157,15 @@ export default async function authRoutes(app: FastifyInstance) {
   }, async (request, reply) => {
     try {
       const token = request.headers.authorization?.replace('Bearer ', '') || '';
-      const user = request.user as any;
+      const { refreshToken } = request.body as { refreshToken?: string };
       
       // Blacklist access token (expires in 15 minutes)
       await blacklistToken(token, 15 * 60 * 1000);
+      
+      // Revoke refresh token if provided
+      if (refreshToken) {
+        await revokeRefreshToken(refreshToken);
+      }
       
       reply.send({ message: 'Logged out successfully' });
     } catch (error: any) {

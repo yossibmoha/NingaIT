@@ -1,64 +1,108 @@
 /**
  * Authentication Middleware
- * Protects routes and checks permissions
+ * Verifies JWT tokens and checks blacklist
  */
 
 import { FastifyRequest, FastifyReply } from 'fastify';
-import { isTokenBlacklisted, hasRole } from '../services/auth.service';
+import { isTokenBlacklisted } from '../services/auth.service';
 
-/**
- * Authenticate user - verifies JWT token
- */
-export async function authenticate(request: FastifyRequest, reply: FastifyReply) {
+export interface AuthenticatedRequest extends FastifyRequest {
+  user?: {
+    sub: string;
+    email: string;
+    organizationId: string;
+    roles: string[];
+  };
+}
+
+export async function authenticate(
+  request: FastifyRequest,
+  reply: FastifyReply
+) {
   try {
-    // Verify JWT (handled by @fastify/jwt plugin)
-    await request.jwtVerify();
+    // Get token from header
+    const authorization = request.headers.authorization;
     
-    // Check if token is blacklisted
-    const token = request.headers.authorization?.replace('Bearer ', '');
-    if (token && await isTokenBlacklisted(token)) {
+    if (!authorization || !authorization.startsWith('Bearer ')) {
       return reply.code(401).send({
-        error: 'Token has been revoked',
+        error: 'Unauthorized',
+        message: 'No token provided',
       });
     }
-  } catch (err) {
-    return reply.code(401).send({
-      error: 'Unauthorized',
-      message: 'Invalid or expired token',
+    
+    const token = authorization.replace('Bearer ', '');
+    
+    // Check if token is blacklisted
+    const isBlacklisted = await isTokenBlacklisted(token);
+    
+    if (isBlacklisted) {
+      return reply.code(401).send({
+        error: 'Unauthorized',
+        message: 'Token has been revoked',
+      });
+    }
+    
+    // Verify JWT token (Fastify JWT plugin)
+    try {
+      const decoded = await request.jwtVerify();
+      request.user = decoded as any;
+    } catch (error) {
+      return reply.code(401).send({
+        error: 'Unauthorized',
+        message: 'Invalid or expired token',
+      });
+    }
+  } catch (error: any) {
+    return reply.code(500).send({
+      error: 'Internal server error',
+      message: error.message,
     });
   }
 }
 
 /**
- * Authorize user - checks role permissions
+ * Role-based access control middleware
  */
-export function authorize(requiredRole: string) {
+export function requireRole(requiredRole: string) {
   return async (request: FastifyRequest, reply: FastifyReply) => {
     const user = request.user as any;
     
     if (!user) {
       return reply.code(401).send({
         error: 'Unauthorized',
+        message: 'Authentication required',
       });
     }
     
-    if (!hasRole(user.role, requiredRole)) {
+    const userRoles = user.roles || [];
+    
+    // Admin has access to everything
+    if (userRoles.includes('admin')) {
+      return;
+    }
+    
+    // Check if user has required role
+    if (!userRoles.includes(requiredRole)) {
       return reply.code(403).send({
         error: 'Forbidden',
-        message: `Requires ${requiredRole} role or higher`,
+        message: `Role '${requiredRole}' required`,
       });
     }
   };
 }
 
 /**
- * Optional authentication - doesn't fail if no token
+ * Organization access control middleware
  */
-export async function optionalAuth(request: FastifyRequest, reply: FastifyReply) {
-  try {
-    await request.jwtVerify();
-  } catch (err) {
-    // Continue without authentication
-  }
+export function requireOrganization() {
+  return async (request: FastifyRequest, reply: FastifyReply) => {
+    const user = request.user as any;
+    
+    if (!user || !user.organizationId) {
+      return reply.code(401).send({
+        error: 'Unauthorized',
+        message: 'Organization required',
+      });
+    }
+  };
 }
-

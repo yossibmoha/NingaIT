@@ -257,6 +257,34 @@ export async function getUserById(userId: string) {
 }
 
 /**
+ * Store refresh token in Redis
+ */
+export async function storeRefreshToken(userId: string, refreshToken: string, expiresIn: number) {
+  // Store refresh token with user ID mapping (expires in 7 days by default)
+  await redis.setex(`refresh:${refreshToken}`, Math.ceil(expiresIn / 1000), userId);
+}
+
+/**
+ * Verify refresh token and return user ID
+ */
+export async function verifyRefreshToken(refreshToken: string): Promise<string> {
+  const userId = await redis.get(`refresh:${refreshToken}`);
+  
+  if (!userId) {
+    throw new Error('Invalid or expired refresh token');
+  }
+  
+  return userId;
+}
+
+/**
+ * Revoke refresh token
+ */
+export async function revokeRefreshToken(refreshToken: string): Promise<void> {
+  await redis.del(`refresh:${refreshToken}`);
+}
+
+/**
  * Blacklist access token (for logout)
  */
 export async function blacklistToken(token: string, expiresIn: number) {
@@ -270,6 +298,39 @@ export async function blacklistToken(token: string, expiresIn: number) {
 export async function isTokenBlacklisted(token: string): Promise<boolean> {
   const result = await redis.get(`blacklist:${token}`);
   return result !== null;
+}
+
+/**
+ * Generate JWT token payload
+ */
+export function generateTokenPayload(user: any) {
+  return {
+    sub: user.id,
+    email: user.email,
+    organizationId: user.organizationId,
+    roles: user.roles || [user.role || 'user'],
+  };
+}
+
+/**
+ * Get token expiration time in seconds
+ */
+export function getTokenExpiration(expiresIn: string): number {
+  const match = expiresIn.match(/^(\d+)([smhd])$/);
+  if (!match) {
+    return 900; // Default 15 minutes
+  }
+  
+  const [, value, unit] = match;
+  const num = parseInt(value, 10);
+  
+  switch (unit) {
+    case 's': return num;
+    case 'm': return num * 60;
+    case 'h': return num * 60 * 60;
+    case 'd': return num * 24 * 60 * 60;
+    default: return 900;
+  }
 }
 
 /**

@@ -118,34 +118,38 @@ export const useAuthStore = create<AuthState>()(
         }
       },
 
-      logout: async () => {
-        try {
-          // Call backend logout (blacklists tokens)
-          await api.post('/auth/logout')
-        } catch (error) {
-          console.error('Logout API error:', error)
-          // Continue with logout even if API call fails
-        } finally {
-          // Clear local storage
-          localStorage.removeItem('access_token')
-          localStorage.removeItem('refresh_token')
+  logout: async () => {
+    try {
+      const refreshToken = localStorage.getItem('refresh_token')
+      
+      // Call backend logout (blacklists access token and revokes refresh token)
+      await api.post('/auth/logout', {
+        refreshToken,
+      })
+    } catch (error) {
+      console.error('Logout API error:', error)
+      // Continue with logout even if API call fails
+    } finally {
+      // Clear local storage
+      localStorage.removeItem('access_token')
+      localStorage.removeItem('refresh_token')
 
-          // Clear state
-          set({
-            user: null,
-            accessToken: null,
-            refreshToken: null,
-            isAuthenticated: false,
-          })
+      // Clear state
+      set({
+        user: null,
+        accessToken: null,
+        refreshToken: null,
+        isAuthenticated: false,
+      })
 
-          message.success('Logged out successfully')
+      message.success('Logged out successfully')
 
-          // Redirect to login
-          if (typeof window !== 'undefined') {
-            window.location.href = '/login'
-          }
-        }
-      },
+      // Redirect to login
+      if (typeof window !== 'undefined') {
+        window.location.href = '/login'
+      }
+    }
+  },
 
       getCurrentUser: async () => {
         try {
