@@ -109,6 +109,15 @@ export default function LoginPage() {
             </Form.Item>
           </Form>
 
+          {/* Forgot Password Link */}
+          <div style={{ textAlign: 'center', marginBottom: 16 }}>
+            <Link href="/forgot-password">
+              <Button type="link">
+                Forgot password?
+              </Button>
+            </Link>
+          </div>
+
           {/* Register Link */}
           <div style={{ textAlign: 'center' }}>
             <Text type="secondary">

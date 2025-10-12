@@ -13,33 +13,24 @@ export const {
   register,
   login,
   getUserById,
+  getUserByEmail,
+  updatePassword,
   hashPassword,
   verifyPassword,
   storeRefreshToken,
   verifyRefreshToken,
   revokeRefreshToken,
+  storePasswordResetToken,
+  verifyPasswordResetToken,
+  revokePasswordResetToken,
   blacklistToken,
   isTokenBlacklisted,
   hasRole,
+  generateTokenPayload,
+  getTokenExpiration,
   RegisterSchema,
   LoginSchema,
 } = AuthService;
 
-// JWT Token generation
-export function generateTokenPayload(user: any) {
-  return {
-    sub: user.id,
-    organizationId: user.organizationId,
-    email: user.email,
-    role: user.role,
-  };
-}
-
-// Generate token expiration times
-export function getTokenExpiration() {
-  return {
-    accessToken: '15m',  // 15 minutes
-    refreshToken: '7d',  // 7 days
-  };
-}
+// Note: generateTokenPayload and getTokenExpiration are now exported from AuthService above
 

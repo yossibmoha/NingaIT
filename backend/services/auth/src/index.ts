@@ -257,11 +257,58 @@ export async function getUserById(userId: string) {
 }
 
 /**
+ * Get user by email
+ */
+export async function getUserByEmail(email: string) {
+  const result = await pool.query<DbUser>(
+    `SELECT * FROM users WHERE email = $1 AND is_active = TRUE`,
+    [email]
+  );
+  
+  if (result.rows.length === 0) {
+    throw new Error('User not found');
+  }
+  
+  const user = result.rows[0];
+  
+  return {
+    id: user.id,
+    organizationId: user.organization_id,
+    email: user.email,
+    firstName: user.first_name,
+    lastName: user.last_name,
+    fullName: `${user.first_name} ${user.last_name}`,
+  };
+}
+
+/**
+ * Update user password
+ */
+export async function updatePassword(userId: string, newPassword: string): Promise<void> {
+  const passwordHash = await hashPassword(newPassword);
+  
+  await pool.query(
+    `UPDATE users 
+     SET password_hash = $1, updated_at = CURRENT_TIMESTAMP
+     WHERE id = $2`,
+    [passwordHash, userId]
+  );
+}
+
+/**
  * Store refresh token in Redis
  */
 export async function storeRefreshToken(userId: string, refreshToken: string, expiresIn: number) {
   // Store refresh token with user ID mapping (expires in 7 days by default)
   await redis.setex(`refresh:${refreshToken}`, Math.ceil(expiresIn / 1000), userId);
+}
+
+/**
+ * Store password reset token in Redis
+ */
+export async function storePasswordResetToken(userId: string, resetToken: string, expiresIn: number = 3600) {
+  // Store reset token with user ID mapping (expires in 1 hour by default)
+  await redis.setex(`reset:${resetToken}`, expiresIn, userId);
 }
 
 /**
@@ -282,6 +329,26 @@ export async function verifyRefreshToken(refreshToken: string): Promise<string> 
  */
 export async function revokeRefreshToken(refreshToken: string): Promise<void> {
   await redis.del(`refresh:${refreshToken}`);
+}
+
+/**
+ * Verify password reset token and return user ID
+ */
+export async function verifyPasswordResetToken(resetToken: string): Promise<string> {
+  const userId = await redis.get(`reset:${resetToken}`);
+  
+  if (!userId) {
+    throw new Error('Invalid or expired reset token');
+  }
+  
+  return userId;
+}
+
+/**
+ * Revoke password reset token
+ */
+export async function revokePasswordResetToken(resetToken: string): Promise<void> {
+  await redis.del(`reset:${resetToken}`);
 }
 
 /**

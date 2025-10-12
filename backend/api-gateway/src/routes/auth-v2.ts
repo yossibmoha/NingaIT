@@ -7,9 +7,14 @@ import {
   register, 
   login, 
   getUserById,
+  getUserByEmail,
+  updatePassword,
   storeRefreshToken,
   verifyRefreshToken,
   revokeRefreshToken,
+  storePasswordResetToken,
+  verifyPasswordResetToken,
+  revokePasswordResetToken,
   blacklistToken,
   RegisterSchema,
   LoginSchema,
@@ -17,6 +22,7 @@ import {
   getTokenExpiration
 } from '../services/auth.service';
 import { authenticate } from '../middleware/auth';
+import { sendPasswordResetEmail, generateResetToken } from '../../../services/auth/src/email';
 
 export default async function authRoutes(app: FastifyInstance) {
   // Register endpoint
@@ -255,6 +261,109 @@ export default async function authRoutes(app: FastifyInstance) {
     } catch (error: any) {
       reply.code(404).send({
         error: 'User not found',
+        message: error.message,
+      });
+    }
+  });
+
+  // Request password reset
+  app.post('/forgot-password', {
+    schema: {
+      tags: ['auth'],
+      description: 'Request password reset email',
+      body: {
+        type: 'object',
+        required: ['email'],
+        properties: {
+          email: { type: 'string', format: 'email' },
+        },
+      },
+      response: {
+        200: {
+          type: 'object',
+          properties: {
+            message: { type: 'string' },
+          },
+        },
+      },
+    },
+  }, async (request, reply) => {
+    try {
+      const { email } = request.body as { email: string };
+      
+      // Get user by email
+      let user;
+      try {
+        user = await getUserByEmail(email);
+      } catch (error) {
+        // Don't reveal if email exists or not (security)
+        reply.send({ 
+          message: 'If the email exists, a password reset link has been sent.' 
+        });
+        return;
+      }
+      
+      // Generate reset token
+      const resetToken = generateResetToken();
+      
+      // Store reset token (1 hour expiry)
+      await storePasswordResetToken(user.id, resetToken, 3600);
+      
+      // Send reset email
+      await sendPasswordResetEmail(email, resetToken, user.fullName);
+      
+      reply.send({ 
+        message: 'If the email exists, a password reset link has been sent.' 
+      });
+    } catch (error: any) {
+      reply.code(500).send({
+        error: 'Failed to process request',
+        message: error.message,
+      });
+    }
+  });
+
+  // Reset password with token
+  app.post('/reset-password', {
+    schema: {
+      tags: ['auth'],
+      description: 'Reset password using reset token',
+      body: {
+        type: 'object',
+        required: ['token', 'password'],
+        properties: {
+          token: { type: 'string' },
+          password: { type: 'string', minLength: 8 },
+        },
+      },
+      response: {
+        200: {
+          type: 'object',
+          properties: {
+            message: { type: 'string' },
+          },
+        },
+      },
+    },
+  }, async (request, reply) => {
+    try {
+      const { token, password } = request.body as { token: string; password: string };
+      
+      // Verify reset token
+      const userId = await verifyPasswordResetToken(token);
+      
+      // Update password
+      await updatePassword(userId, password);
+      
+      // Revoke reset token
+      await revokePasswordResetToken(token);
+      
+      reply.send({ 
+        message: 'Password reset successful. You can now login with your new password.' 
+      });
+    } catch (error: any) {
+      reply.code(400).send({
+        error: 'Password reset failed',
         message: error.message,
       });
     }
